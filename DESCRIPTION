@@ -23,7 +23,10 @@ Imports:
     readxl,
     tidyr
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/GABurns/crossmet
+URL: https://github.com/GABurns/crossmet, https://gaburns.github.io/crossmet/
 BugReports: https://github.com/GABurns/crossmet/issues
+VignetteBuilder: knitr
