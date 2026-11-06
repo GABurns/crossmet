@@ -1,0 +1,27 @@
+Package: crossmet
+Type: Package
+Title: Visualising Crossnacreevy Weather Data
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Gareth", "Burns",
+      email = "gareth.burns@afbini.gov.uk",
+      role = c("aut", "cre")
+    )
+  )
+Description: More about what it does (maybe more than one line).
+    Continuation lines should be indented.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Config/roxygen2/version: 8.1.1
+Imports:
+    dplyr,
+    ggplot2,
+    janitor,
+    lubridate,
+    readxl,
+    tidyr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

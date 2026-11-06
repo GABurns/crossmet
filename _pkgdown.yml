@@ -1,0 +1,14 @@
+url: https://gaburns.github.io/crossmet/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [github]
+
+reference:
+  - title: "Functions"
+    contents:
+      - starts_with("")
