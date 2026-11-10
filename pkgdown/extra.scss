@@ -1,0 +1,24 @@
+/* Small layout refinements for the crossmet documentation site. */
+.navbar .navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.article h2 {
+  margin-top: 2rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.article table {
+  font-size: 0.95rem;
+}
+
+.article img {
+  max-width: 100%;
+  height: auto;
+}
+
+.article .figure {
+  margin: 1.5rem 0;
+}
