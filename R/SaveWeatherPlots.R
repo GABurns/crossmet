@@ -1,40 +1,25 @@
 #' @title Save weather plots
 #' @author Gareth Burns
 #' @description Creates selected weather plots and saves them to a specified directory.
-#' @param data A data frame containing weather data in long format.
-#'   The data must contain the columns `Date`, `DOY`, `variable`, and `value`.
+#' @param data A data frame containing Date, DOY, variable, and value columns.
 #' @param plots Character vector specifying the plots to create. Available
-#'   options are `"temperature"`, `"air_temperature"`,
-#'   `"temperature_difference"`, `"rainfall"`, `"soil_temperature"`,
-#'   `"wind_speed"`, `"relative_humidity"`, `"leaf_wetness"`, and `"solar_rad"`.
-#' @param path Character string giving the directory in which to save
-#'   the plots. The directory will be created if it does not exist.
+#'   options are "temperature", "air_temperature", "temperature_difference",
+#'   "rainfall", "soil_temperature", "wind_speed", "relative_humidity",
+#'   "leaf_wetness", and "solar_radiation".
+#' @param monthly_grids Logical. If TRUE, also saves monthly grid plots for
+#'   each supported weather variable.
+#' @param path Directory in which to save plots. Created if necessary.
 #' @param width Width of each saved plot in inches. Default is 8.
 #' @param height Height of each saved plot in inches. Default is 5.
-#' @param dpi Resolution of saved images in dots per inch.
-#'   Default is 300.
-#' @param device Character string specifying the output image format.
-#'   Default is `"png"`.
-#' @return Invisibly returns a character vector containing the paths
-#'   of the files created.
+#' @param dpi Resolution of saved images in dots per inch. Default is 300.
+#' @param device Output image format. Default is "png".
+#' @return Invisibly returns a character vector containing the paths of all
+#'   files created, including monthly grid plots.
 #' @import ggplot2
-#' @examples
-#' \dontrun{
-#' SaveWeatherPlots(
-#'   weather,
-#'   plots = c(
-#'     "temperature",
-#'     "rainfall",
-#'     "soil_temperature"
-#'   ),
-#'   path = "plots"
-#' )
-#' }
 #' @importFrom janitor make_clean_names
 #' @export
-
 SaveWeatherPlots <- function(data,
-                             plots =   c(
+                             plots = c(
                                "temperature",
                                "air_temperature",
                                "temperature_difference",
@@ -51,7 +36,20 @@ SaveWeatherPlots <- function(data,
                              height = 5,
                              dpi = 300,
                              device = "png") {
-  # Map plot names to plotting functions
+  required_cols <- c("Date", "DOY", "variable", "value")
+  missing_cols <- setdiff(required_cols, names(data))
+  if (length(missing_cols)) {
+    stop("data is missing required column(s): ",
+         paste(missing_cols, collapse = ", "), call. = FALSE)
+  }
+  if (!length(data$Date) || all(is.na(data$Date))) {
+    stop("data$Date must contain at least one valid date.", call. = FALSE)
+  }
+  if (!is.logical(monthly_grids) || length(monthly_grids) != 1L ||
+      is.na(monthly_grids)) {
+    stop("monthly_grids must be TRUE or FALSE.", call. = FALSE)
+  }
+
   plot_functions <- list(
     temperature = TemperaturePlot,
     air_temperature = MeanAirTempPlot,
@@ -64,55 +62,40 @@ SaveWeatherPlots <- function(data,
     solar_radiation = SolarRadPlot
   )
 
-  # Check requested plots
   invalid_plots <- setdiff(plots, names(plot_functions))
-
-  if (length(invalid_plots) > 0) {
-    warning(
-      "Unknown plot(s): ",
-      paste(invalid_plots, collapse = ", "),
-      ". Available plots are: ",
-      paste(names(plot_functions), collapse = ", "),
+  if (length(invalid_plots)) {
+    stop(
+      "Unknown plot(s): ", paste(invalid_plots, collapse = ", "),
+      ". Available plots are: ", paste(names(plot_functions), collapse = ", "),
       call. = FALSE
     )
   }
-
-  # Create output directory
-  if (!dir.exists(path)) {
-    dir.create(path, recursive = TRUE)
+  if (anyDuplicated(plots)) {
+    stop("plots must not contain duplicate plot names.", call. = FALSE)
   }
 
-  saved_files <- character(length(plots))
+  if (!dir.exists(path) && !dir.create(path, recursive = TRUE)) {
+    stop("Could not create output directory: ", path, call. = FALSE)
+  }
 
-  # Create and save each requested plot
-  for (i in seq_along(plots)) {
-    plot_name <- sprintf("%s_%s_to_%s",
-                         plots[[i]],
-                         format(min(data$Date), "%d %b %Y"),
-                         format(max(data$Date), "%d %b %Y"))
+  date_range <- paste0(
+    format(min(as.Date(data$Date), na.rm = TRUE), "%d %b %Y"),
+    "_to_",
+    format(max(as.Date(data$Date), na.rm = TRUE), "%d %b %Y")
+  )
+  saved_files <- character()
 
-    plot_function <- plot_functions[[plots[[i]]]]
-
-    p <- plot_function(data)
-
-    filename <- paste0(plot_name, ".", device)
-
-    filepath <- file.path(path, filename)
-
+  for (plot_name in plots) {
+    p <- plot_functions[[plot_name]](data)
+    filepath <- file.path(path, paste0(plot_name, "_", date_range, ".", device))
     ggsave(
-      filename = filepath,
-      plot = p,
-      device = device,
-      width = width,
-      height = height,
-      units = "in",
-      dpi = dpi
+      filename = filepath, plot = p, device = device,
+      width = width, height = height, units = "in", dpi = dpi
     )
-
-    saved_files[[i]] <- filepath
+    saved_files <- c(saved_files, filepath)
   }
 
-  if (isTRUE(monthly_grids)) {
+  if (monthly_grids) {
     variables <- c(
       "Air temp Mean",
       "Average Wind speed Km/h",
@@ -126,33 +109,19 @@ SaveWeatherPlots <- function(data,
       "temperature_range"
     )
 
-
-    for (j in variables) {
-      plot_name <- sprintf(
-        "monthly_grid_%s_%s_to_%s",
-        j,
-        format(min(data$Date), "%d %b %Y"),
-        format(max(data$Date), "%d %b %Y")
+    for (variable in variables) {
+      p <- PlotMonthlyGrid(data, variable = variable)
+      filename <- paste0(
+        "monthly_grid_", make_clean_names(variable), "_",
+        date_range, ".", device
       )
-
-      p <- PlotMonthlyGrid(data, variable = j)
-
-      filename <- paste0(make_clean_names(plot_name), ".", device)
-
       filepath <- file.path(path, filename)
-
       ggsave(
-        filename = filepath,
-        plot = p,
-        device = device,
-        width = width,
-        height = height,
-        units = "in",
-        dpi = dpi
+        filename = filepath, plot = p, device = device,
+        width = width, height = height, units = "in", dpi = dpi
       )
+      saved_files <- c(saved_files, filepath)
     }
-
-
   }
 
   invisible(saved_files)
