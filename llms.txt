@@ -46,6 +46,8 @@ Functions for importing and preparing daily weather data.
 
 Functions for calculating monthly weather statistics.
 
+- [`ClimateSummaryTable()`](https://GABurns.github.io/crossmet/reference/ClimateSummaryTable.md)
+  : Monthly Climate Summary Table
 - [`MonthlySummaryTable()`](https://GABurns.github.io/crossmet/reference/MonthlySummaryTable.md)
   : Monthly Summary Table
 
