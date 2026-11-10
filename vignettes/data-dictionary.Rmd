@@ -1,0 +1,79 @@
+---
+title: "Data dictionary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data dictionary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+\`\`\`{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+\`\`\`
+
+# Imported data structure
+
+\`ImportWeather()\` returns a long-format data frame with four columns. Each
+date is repeated once for each weather variable, which makes it straightforward
+to filter, group, summarise and plot individual measurements.
+
+| Output column | Type | Meaning |
+|:--|:--|:--|
+| \`Date\` | Date | Calendar date of the daily observation. |
+| \`DOY\` | Integer/numeric | Day of year supplied by the workbook (1–365, or 1–366 in leap years). |
+| \`variable\` | Character | Name of the weather variable. |
+| \`value\` | Numeric | Daily value for that variable, in the units described below. |
+
+# Weather variables
+
+The \`variable\` column contains the following labels. Units are taken from the
+workbook field names and plotting labels; consult the station's instrument
+metadata for the precise measurement convention and calibration.
+
+| Variable label | Unit / scale | Interpretation |
+|:--|:--|:--|
+| \`Temperature deg C Min\` | °C | Daily minimum air temperature. |
+| \`Temperature deg C Max\` | °C | Daily maximum air temperature. |
+| \`Air temp Mean\` | °C | Daily mean air temperature. |
+| \`Temp diff deg C\` | °C | Daily temperature difference as supplied by the workbook. |
+| \`Rainfall mm\` | mm | Daily rainfall total. |
+| \`Soil 15cm deg C\` | °C | Soil temperature at 15 cm depth. |
+| \`Soil 45cm deg C\` | °C | Soil temperature at 45 cm depth. |
+| \`Average Wind speed Km/h\` | km/h | Daily average wind speed. |
+| \`RH (%)\` | % | Relative humidity. |
+| \`Leaf wetness (U)\` | U (source scale) | Leaf-wetness measurement; the workbook label does not define a physical unit. |
+| \`Lite totals daily (W/m2)\` | W/m² (source label) | Daily light/solar-radiation total as labelled in the workbook. Confirm whether the station reports an accumulated energy or an average irradiance before converting or comparing it. |
+
+# Derived plotting variable
+
+\`PlotMonthlyGrid(variable = "temperature_range")\` is a convenience view, not
+an additional imported measurement. It combines \`Temperature deg C Min\` and
+\`Temperature deg C Max\` for the same date and displays the range.
+
+# Missing values and coverage
+
+Missing measurements remain \`NA\` in the imported long data. Summary functions
+exclude missing values from calculations; a group with no observed values
+remains \`NA\`. The importer filters to the requested date range, but does not
+create rows for dates absent from the workbook. Check date coverage before
+interpreting monthly totals or long-term summaries.
+
+# Example
+
+\`\`\`{r, eval = FALSE}
+weather <- ImportWeather(
+  file = "crossnacreevy.xlsx",
+  start_date = "2020-01-01",
+  end_date = "2024-12-31"
+)
+
+dplyr::filter(weather, variable == "Rainfall mm")
+\`\`\`
+
+# Source and interpretation
+
+This dictionary documents the names and units exposed by the package. It is
+not a substitute for the station's formal metadata, instrument manuals or
+quality-control flags. The package does not infer missing observations,
+perform sensor calibration, or independently validate the scientific
+meaning of workbook fields.
