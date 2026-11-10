@@ -1,19 +1,79 @@
---
-title: "summary-tables"
+---
+title: "Monthly summaries and climate normals"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{summary-tables}
+  %\VignetteIndexEntry{Monthly summaries and climate normals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+\`\`\`{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+\`\`\`
 
-```{r setup}
-library(crossmet)
-```
+# Two different questions
+
+The package provides two monthly summary functions. They answer different
+questions and should not be used interchangeably.
+
+- \`MonthlySummaryTable()\`: what were the monthly statistics in **each
+  individual year**?
+- \`ClimateSummaryTable()\`: what is the **average monthly climatology across
+  years**?
+
+Both functions expect the long-format data returned by \`ImportWeather()\`.
+
+# Monthly summaries by year
+
+\`\`\`{r, eval = FALSE}
+weather <- ImportWeather(
+  "data/crossnacreevy.xlsx",
+  start_date = "2018-01-01",
+  end_date = "2024-12-31"
+)
+
+monthly_by_year <- MonthlySummaryTable(weather)
+monthly_by_year
+\`\`\`
+
+The result contains one row per year and weather variable, with calendar months
+as columns. January 2020 and January 2021 remain separate rows.
+
+# Long-term monthly climate summaries
+
+\`\`\`{r, eval = FALSE}
+climate_normals <- ClimateSummaryTable(weather)
+climate_normals
+\`\`\`
+
+The climatology function first calculates each year's monthly statistic, then
+takes the mean of those yearly values for each calendar month and variable.
+For rainfall, for example, it averages annual January rainfall totals; it does
+not average all individual January daily readings across the entire period.
+
+# Aggregation rules
+
+| Variable type | Monthly statistic within each year | Across-year climatology |
+|:--|:--|:--|
+| Rainfall and daily light totals | Sum of daily values | Mean of yearly monthly totals |
+| Daily maximum temperature | Maximum daily value | Mean of yearly monthly maxima |
+| Daily minimum temperature | Minimum daily value | Mean of yearly monthly minima |
+| Other variables | Mean of daily values | Mean of yearly monthly means |
+
+# Missing observations
+
+Missing values are excluded from a calculation. If a year-month-variable group
+contains no observed values, its monthly result is \`NA\`. Climate summaries
+exclude missing yearly monthly values from the across-year mean; if every year
+is missing for that month and variable, the climatological result is \`NA\`.
+
+Neither function fills missing dates or adjusts for unequal observation
+coverage. For comparisons, inspect the number of valid observations in each
+year and month and consider whether the source data are sufficiently complete.
+
+# Choosing a function
+
+Use \`MonthlySummaryTable()\` to compare specific years, investigate unusual
+seasons or prepare annual reporting tables. Use \`ClimateSummaryTable()\` when
+you want a long-term seasonal profile. Always report the years included and
+review coverage before interpreting climate differences.
