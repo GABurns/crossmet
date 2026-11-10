@@ -2,6 +2,7 @@ url: https://gaburns.github.io/crossmet/
 
 template:
   bootstrap: 5
+  light-switch: true
   bootswatch: flatly
   bslib:
     primary: "#24536b"
@@ -12,8 +13,6 @@ template:
     navbar-light-hover-color: "#f2b84b"
   params:
     bootswatch: flatly
-
-logo: man/figures/logo.svg
 
 home:
   title: "crossmet: Crossnacreevy weather data"
@@ -28,7 +27,7 @@ home:
     - text: Explore the graph gallery
       href: articles/visualisations.html
   sidebar:
-    structure: [links, license, community, citation, authors, dev]
+    structure: [links, community, citation, authors, dev]
 
 navbar:
   structure:
