@@ -77,8 +77,18 @@ ImportWeather <- function(file,
 
   years <- as.character(years)
 
-  # Find available Excel sheets
-  sheets <- excel_sheets(file)
+  # Read workbook metadata and report malformed workbooks clearly
+  sheets <- tryCatch(
+    excel_sheets(file),
+    error = function(e) {
+      stop("Unable to read Excel workbook: ", conditionMessage(e),
+           call. = FALSE)
+    }
+  )
+
+  if (!length(sheets)) {
+    stop("Excel workbook contains no worksheets.", call. = FALSE)
+  }
 
   # Select sheets corresponding to requested years
   selected_sheets <- sheets[sheets %in% years]
@@ -90,6 +100,14 @@ ImportWeather <- function(file,
     warning("No worksheet found for year(s): ",
             paste(missing_years, collapse = ", "),
             call. = FALSE)
+  }
+
+  if (!length(selected_sheets)) {
+    stop(
+      "No worksheets found for the requested year(s): ",
+      paste(years, collapse = ", "),
+      call. = FALSE
+    )
   }
 
   # Expected Excel columns
@@ -117,6 +135,14 @@ ImportWeather <- function(file,
                           col_names = FALSE,
                           n_max = 2)
 
+    if (nrow(headers) < 2L || ncol(headers) < 13L) {
+      stop(
+        "Worksheet '", sheet,
+        "' must contain two header rows and at least 13 columns.",
+        call. = FALSE
+      )
+    }
+
     headers[is.na(headers)] <- ""
 
     column_names <- paste(headers[1, ], headers[2, ])
@@ -142,17 +168,21 @@ ImportWeather <- function(file,
     # Remove spaces around column names
     names(dat) <- trimws(names(dat))
 
-    # Check required columns are present
+    # Check required columns before selecting them. A warning followed by
+    # dat[expected_cols] would otherwise fail with an unhelpful subscript error.
     missing_cols <- setdiff(expected_cols, names(dat))
 
     if (length(missing_cols) > 0) {
-      warning(
-        "Worksheet '",
-        sheet,
-        "' is missing required column(s): ",
+      stop(
+        "Worksheet '", sheet, "' is missing required column(s): ",
         paste(missing_cols, collapse = ", "),
         call. = FALSE
       )
+    }
+
+    if (anyDuplicated(names(dat))) {
+      stop("Worksheet '", sheet, "' contains duplicated column names.",
+           call. = FALSE)
     }
 
     dat[expected_cols]
