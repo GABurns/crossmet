@@ -1,79 +1,98 @@
-
-url: https://GABurns.github.io/crossmet/
+url: https://gaburns.github.io/crossmet/
 
 template:
   bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#24536b"
+    secondary: "#5f8067"
+    link-color: "#176b87"
+    navbar-bg: "#173b57"
+    navbar-light-color: "#f7fbfd"
+    navbar-light-hover-color: "#f2b84b"
+  params:
+    bootswatch: flatly
+
+logo: man/figures/logo.svg
 
 home:
-  title: "Crossnacreevy Weather"
+  title: "crossmet: Crossnacreevy weather data"
   description: >
-    Tools for processing, summarising and visualising
-    daily meteorological observations from the AFBI
-    Crossnacreevy weather station.
+    Import, summarise and visualise daily meteorological observations from
+    the AFBI Crossnacreevy weather station in Northern Ireland.
+  links:
+    - text: Import weather data
+      href: articles/importing-data.html
+    - text: Data dictionary
+      href: articles/data-dictionary.html
+    - text: Explore the graph gallery
+      href: articles/visualisations.html
+  sidebar:
+    structure: [links, license, community, citation, authors, dev]
 
 navbar:
   structure:
-    left:
-      - intro
-      - reference
-      - articles
-      - news
-    right:
-      - github
-
+    left: [intro, reference, articles, news]
+    right: [github]
   components:
     intro:
       text: Home
       href: index.html
-
     articles:
-      text: Articles
+      text: Guides
       menu:
-        - text: "Importing Data"
+        - text: "Getting started"
+        - text: "Importing weather data"
           href: articles/importing-data.html
-        - text: "Monthly summaries"
+        - text: "Monthly summaries and climate normals"
           href: articles/summary-tables.html
-        - text: "Visualisations"
+        - text: "Data dictionary"
+          href: articles/data-dictionary.html
+        - text: "Visualisation gallery"
           href: articles/visualisations.html
-
     github:
       icon: fab fa-github
       href: https://github.com/GABurns/crossmet
+      aria-label: GitHub repository
 
 articles:
   - title: Getting started
     navbar: Getting started
     contents:
       - importing-data
-      - summary-tables
-
-  - title: Visualisation
-    navbar: Visualisation
+      - data-dictionary
+  - title: Analysis
+    navbar: Analysis
     contents:
+      - summary-tables
       - visualisations
 
-
 reference:
-  - title: "Data preparation"
-    desc: "Functions for importing and preparing daily weather data."
+  - title: Data import
+    desc: Read annual Crossnacreevy Excel worksheets into tidy observations.
     contents:
-      - starts_with("Import")
-
-  - title: "Monthly summaries"
-    desc: "Functions for calculating monthly weather statistics."
+      - ImportWeather
+  - title: Summary tables
+    desc: Year-specific monthly summaries and long-term monthly climate normals.
     contents:
-      - ends_with("Table")
-
-  - title: "Visualisations"
-    desc: "Functions for creating weather data plots."
+      - MonthlySummaryTable
+      - ClimateSummaryTable
+  - title: Weather plots
+    desc: Plot daily weather variables and monthly grids.
     contents:
-      - ends_with("Plot")
-      - starts_with("Plot")
-
-  - title: "Utiltity"
-    desc: "Misc. Functions"
+      - TemperaturePlot
+      - MeanAirTempPlot
+      - TemperatureDifferencePlot
+      - RainfallPlot
+      - SoilTempPlot
+      - WindSpeedPlot
+      - RelativeHumidityPlot
+      - LeafWetnessPlot
+      - SolarRadPlot
+      - PlotMonthlyGrid
+  - title: Export
     contents:
       - SaveWeatherPlots
 
-
-
+development:
+  mode: auto
