@@ -199,3 +199,30 @@ test_that("ImportWeather errors when file does not exist", {
 
 
 
+
+
+test_that("ImportWeather validates date ranges", {
+  workbook <- weather_file
+
+  expect_error(
+    ImportWeather(workbook, start_date = "not-a-date",
+                  end_date = "2024-12-31"),
+    "valid dates"
+  )
+  expect_error(
+    ImportWeather(workbook, start_date = "2025-01-01",
+                  end_date = "2024-01-01"),
+    "earlier than or equal"
+  )
+})
+
+test_that("ImportWeather reports malformed workbook files clearly", {
+  workbook <- tempfile(fileext = ".xlsx")
+  writeLines("not an Excel workbook", workbook)
+
+  expect_error(
+    ImportWeather(workbook, start_date = "2024-01-01",
+                  end_date = "2024-12-31"),
+    "Unable to read Excel workbook"
+  )
+})
