@@ -154,7 +154,7 @@ test_that("ImportWeather imports known values correctly", {
   # Change 14.4 to the value stored in your test workbook
   expect_equal(
     rainfall,
-    14.10
+    14.40
   )
 })
 
