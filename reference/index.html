@@ -15,14 +15,16 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/getting-started.html">getting-started</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/importing-data.html">Importing Data</a></li>
+    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries</a></li>
+    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisations</a></li>
   </ul></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet"><span class="fa fab fa-github"></span></a></li>
       </ul></div>
 
 
@@ -35,9 +37,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a></h2>
 
-
+      <div class="section-desc"><p>Functions for importing and preparing daily weather data.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -50,8 +52,33 @@
 
         </dt>
         <dd>Import weather data from Excel</dd>
+      </dl></div><div class="section level2">
+      <h2 id="monthly-summaries">Monthly summaries<a class="anchor" aria-label="anchor" href="#monthly-summaries"></a></h2>
 
-        <dt>
+      <div class="section-desc"><p>Functions for calculating monthly weather statistics.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="MonthlySummaryTable.html">MonthlySummaryTable()</a></code>
+
+        </dt>
+        <dd>Monthly Summary Table</dd>
+      </dl></div><div class="section level2">
+      <h2 id="visualisations">Visualisations<a class="anchor" aria-label="anchor" href="#visualisations"></a></h2>
+
+      <div class="section-desc"><p>Functions for creating weather data plots.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="LeafWetnessPlot.html">LeafWetnessPlot()</a></code>
 
@@ -67,20 +94,6 @@
 
         <dt>
 
-          <code><a href="MonthlySummary.html">MonthlySummary()</a></code>
-
-        </dt>
-        <dd>Monthly Summary</dd>
-
-        <dt>
-
-          <code><a href="PlotMonthlyGrid.html">PlotMonthlyGrid()</a></code>
-
-        </dt>
-        <dd>PlotMonthlyGrid</dd>
-
-        <dt>
-
           <code><a href="RainfallPlot.html">RainfallPlot()</a></code>
 
         </dt>
@@ -92,13 +105,6 @@
 
         </dt>
         <dd>Plot relative humidity</dd>
-
-        <dt>
-
-          <code><a href="SaveWeatherPlots.html">SaveWeatherPlots()</a></code>
-
-        </dt>
-        <dd>Save weather plots</dd>
 
         <dt>
 
@@ -137,12 +143,29 @@
 
         <dt>
 
-          <code><a href="plot_weather_variable.html">plot_weather_variable()</a></code>
+          <code><a href="PlotMonthlyGrid.html">PlotMonthlyGrid()</a></code>
 
         </dt>
-        <dd>Import weather data from Excel</dd>
+        <dd>PlotMonthlyGrid</dd>
+      </dl></div><div class="section level2">
+      <h2 id="utiltity">Utiltity<a class="anchor" aria-label="anchor" href="#utiltity"></a></h2>
+
+      <div class="section-desc"><p>Misc. Functions</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="SaveWeatherPlots.html">SaveWeatherPlots()</a></code>
+
+        </dt>
+        <dd>Save weather plots</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
