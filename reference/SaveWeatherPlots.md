@@ -1,15 +1,16 @@
 # Save weather plots
 
 Creates selected weather plots and saves them to a specified directory.
+Unknown plot names are rejected with an informative error.
 
 ## Usage
 
 ``` r
 SaveWeatherPlots(
   data,
-  plots = c("temperature", "air_temperature", "temperature_difference", "rainfall",
-    "soil_temperature", "wind_speed", "relative_humidity", "leaf_wetness",
-    "solar_radiation"),
+  plots = c("temperature", "air_temperature", "temperature_difference",
+    "rainfall", "soil_temperature", "wind_speed", "relative_humidity",
+    "leaf_wetness", "solar_radiation"),
   monthly_grids = TRUE,
   path = getwd(),
   width = 8,
@@ -23,60 +24,41 @@ SaveWeatherPlots(
 
 - data:
 
-  A data frame containing weather data in long format. The data must
-  contain the columns \`Date\`, \`DOY\`, \`variable\`, and \`value\`.
+  A data frame containing Date, DOY, variable, and value columns.
 
 - plots:
 
-  Character vector specifying the plots to create. Available options are
-  \`"temperature"\`, \`"air_temperature"\`,
-  \`"temperature_difference"\`, \`"rainfall"\`, \`"soil_temperature"\`,
-  \`"wind_speed"\`, \`"relative_humidity"\`, \`"leaf_wetness"\`, and
-  \`"solar_rad"\`.
+  Character vector of plot names to create.
+
+- monthly_grids:
+
+  Logical; also save monthly grid plots when TRUE.
 
 - path:
 
-  Character string giving the directory in which to save the plots. The
-  directory will be created if it does not exist.
+  Directory in which to save plots.
 
 - width:
 
-  Width of each saved plot in inches. Default is 8.
+  Plot width in inches.
 
 - height:
 
-  Height of each saved plot in inches. Default is 5.
+  Plot height in inches.
 
 - dpi:
 
-  Resolution of saved images in dots per inch. Default is 300.
+  Image resolution in dots per inch.
 
 - device:
 
-  Character string specifying the output image format. Default is
-  \`"png"\`.
+  Output image format.
 
 ## Value
 
-Invisibly returns a character vector containing the paths of the files
-created.
+Invisibly returns the paths of all files created, including monthly grid
+plots.
 
 ## Author
 
 Gareth Burns
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-SaveWeatherPlots(
-  weather,
-  plots = c(
-    "temperature",
-    "rainfall",
-    "soil_temperature"
-  ),
-  path = "plots"
-)
-} # }
-```
