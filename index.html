@@ -59,28 +59,61 @@
 </h1></div>
 <!-- badges: start -->
 
-
-
-
 <!-- badges: end -->
-<p>This package provides tools for processing, summarising and visualising daily meteorological data from the AFBI Crossnacreevy weather station.</p>
-<p>It transforms daily weather summaries into monthly summary tables and a range of data visualisations, making it easier to explore seasonal patterns, monitor weather conditions and examine historical meteorological trends.</p>
-<p>The package is designed to provide a consistent and reproducible workflow for summarising weather observations, with outputs suitable for reporting, exploratory data analysis and further research.</p>
+<p><strong>crossmet</strong> provides tools for importing, summarising and visualising daily meteorological observations from the AFBI Crossnacreevy weather station in Northern Ireland.</p>
+<p>The package reads annual worksheets from an Excel workbook, reshapes the observations into a tidy long-format data frame, produces year-specific monthly summaries and long-term monthly climate summaries, and creates weather plots.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of crossmet from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"GABurns/crossmet"</span><span class="op">)</span></span></code></pre></div>
+<p>Install the development version from GitHub:</p>
+<p>```r install.packages(“pak”) pak::pak(“GABurns/crossmet”) ```</p>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="import-weather-observations">Import weather observations<a class="anchor" aria-label="anchor" href="#import-weather-observations"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GABurns/crossmet" class="external-link">crossmet</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
+<p>`ImportWeather()` reads the worksheets needed for the requested date range. Worksheets are expected to be named with their four-digit year (for example, `2023`) and to follow the Crossnacreevy workbook layout.</p>
+<p>```r library(crossmet)</p>
+<p>weather &lt;- ImportWeather( file = “data/crossnacreevy_weather.xlsx”, start_date = “2020-01-01”, end_date = “2024-12-31” )</p>
+<p>head(weather) ```</p>
+<p>The returned data frame contains `Date`, `DOY`, `variable` and `value` columns, with one row per date and weather variable.</p>
+</div>
+<div class="section level2">
+<h2 id="monthly-summaries">Monthly summaries<a class="anchor" aria-label="anchor" href="#monthly-summaries"></a>
+</h2>
+<p>`MonthlySummaryTable()` calculates monthly values separately for each year. Rainfall and daily solar-radiation totals are summed; daily maximum temperature is represented by its monthly maximum; daily minimum temperature by its monthly minimum; and other variables by their monthly mean.</p>
+<p>```r yearly_months &lt;- MonthlySummaryTable(weather) ```</p>
+<p>`ClimateSummaryTable()` calculates long-term monthly climatological values. It first calculates the relevant monthly statistic for each year, then averages those yearly monthly values across the available years. This means rainfall climatology is the mean of annual monthly rainfall totals, rather than the average daily rainfall.</p>
+<p>```r climate_normals &lt;- ClimateSummaryTable(weather) ```</p>
+<p>Missing observations are excluded from calculations. A yearly monthly statistic is `NA` when that group has no observed values; a climatological average is `NA` when all years are missing for that month and variable.</p>
+</div>
+<div class="section level2">
+<h2 id="visualise-weather-data">Visualise weather data<a class="anchor" aria-label="anchor" href="#visualise-weather-data"></a>
+</h2>
+<p>The plotting functions return ggplot objects and can be customised with normal ggplot2 layers.</p>
+<p>```r PlotMonthlyGrid(weather, variable = “RH (%)”) RainfallPlot(weather) TemperaturePlot(weather) ```</p>
+<p>To save a selection of plots and the monthly grid plots:</p>
+<p>```r saved_files &lt;- SaveWeatherPlots( weather, plots = c(“temperature”, “rainfall”, “relative_humidity”), monthly_grids = TRUE, path = “outputs/weather-plots” )</p>
+<p>saved_files ```</p>
+<p>The function returns the paths of all files it creates, including monthly grid images.</p>
+</div>
+<div class="section level2">
+<h2 id="input-workbook-requirements">Input workbook requirements<a class="anchor" aria-label="anchor" href="#input-workbook-requirements"></a>
+</h2>
+<ul>
+<li>Each worksheet represents one calendar year and is named using that year.</li>
+<li>The workbook contains two header rows followed by daily observations.</li>
+<li>The expected weather columns are Date, DOY, minimum and maximum temperature, mean air temperature, temperature difference, rainfall, soil temperatures, average wind speed, relative humidity, leaf wetness and daily solar radiation.</li>
+<li>Date values must be readable by readxl as Excel dates.</li>
+</ul>
+<p>See the function help pages for complete argument details:</p>
+<p>```r ?ImportWeather ?MonthlySummaryTable ?ClimateSummaryTable ?PlotMonthlyGrid ?SaveWeatherPlots ```</p>
+</div>
+<div class="section level2">
+<h2 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
+</h2>
+<p>Run the package tests with:</p>
+<p>```r pak::pak(“GABurns/crossmet”) testthat::test_local() ```</p>
+<p>The package uses testthat edition 3.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -116,10 +149,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/GABurns/crossmet/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/GABurns/PACKAGE/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://github.com/USERNAME/PACKAGE" class="external-link"><img src="https://img.shields.io/github/r-package/v/GABurns/crossmet" alt="GitHub version"></a></li>
-<li><a href="LICENSE"><img src="https://img.shields.io/github/license/GABurns/crossmet" alt="License"></a></li>
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle"></a></li>
+<li><a href="https://github.com/GABurns/crossmet/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/GABurns/crossmet/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/GABurns/crossmet" class="external-link"><img src="https://img.shields.io/github/r-package/v/GABurns/crossmet" alt="GitHub version"></a></li>
+<li><a href="https://github.com/GABurns/crossmet" class="external-link"><img src="https://img.shields.io/github/license/GABurns/crossmet" alt="License"></a></li>
 </ul>
 </div>
 
