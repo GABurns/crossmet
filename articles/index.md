@@ -2,10 +2,14 @@
 
 ### Getting started
 
-- [importing-data](https://GABurns.github.io/crossmet/articles/importing-data.md):
-- [UNKNOWN
-  TITLE](https://GABurns.github.io/crossmet/articles/summary-tables.md):
+- [Importing Crossnacreevy weather
+  data](https://gaburns.github.io/crossmet/articles/importing-data.md):
+- [Data
+  dictionary](https://gaburns.github.io/crossmet/articles/data-dictionary.md):
 
-### Visualisation
+### Analysis
 
-- [visualisations](https://GABurns.github.io/crossmet/articles/visualisations.md):
+- [Monthly summaries and climate
+  normals](https://gaburns.github.io/crossmet/articles/summary-tables.md):
+- [Weather graph
+  gallery](https://gaburns.github.io/crossmet/articles/visualisations.md):

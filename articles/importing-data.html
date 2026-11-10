@@ -5,22 +5,22 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>importing-data • crossmet</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Importing Crossnacreevy weather data • crossmet</title>
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="importing-data">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Importing Crossnacreevy weather data">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">crossmet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,17 +32,19 @@
 <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/importing-data.html">Importing Data</a></li>
-    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries</a></li>
-    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisations</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-guides" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Guides</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-guides">
+<li><h6 class="dropdown-header" data-toc-skip>Getting started</h6></li>
+    <li><a class="dropdown-item" href="../articles/importing-data.html">Importing weather data</a></li>
+    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries and climate normals</a></li>
+    <li><a class="dropdown-item" href="../articles/data-dictionary.html">Data dictionary</a></li>
+    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisation gallery</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet"><span class="fa fab fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
       </ul>
 </div>
 
@@ -55,8 +57,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>importing-data</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Importing Crossnacreevy weather data</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/GABurns/crossmet/blob/main/vignettes/importing-data.Rmd" class="external-link"><code>vignettes/importing-data.Rmd</code></a></small>
@@ -65,9 +66,90 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GABurns/crossmet" class="external-link">crossmet</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<p>```{r, include = FALSE} knitr::opts_chunk$set(collapse = TRUE,
+comment = “#&gt;”) ```</p>
+<div class="section level2">
+<h2 id="workbook-layout">Workbook layout<a class="anchor" aria-label="anchor" href="#workbook-layout"></a>
+</h2>
+<p>`ImportWeather()` reads an Excel workbook containing one worksheet
+per calendar year. Worksheets must be named with their four-digit year,
+such as `2022`, `2023` and `2024`.</p>
+<p>The Crossnacreevy workbook layout uses two header rows followed by
+daily observations. The importer expects the date and day-of-year fields
+and the weather columns for minimum/maximum temperature, mean air
+temperature, temperature difference, rainfall, soil temperature at 15 cm
+and 45 cm, average wind speed, relative humidity, leaf wetness and daily
+light totals.</p>
+<p>Keep the source workbook unchanged and retain a copy of the station’s
+measurement metadata. The data dictionary lists the variable labels and
+the units exposed by this package.</p>
+</div>
+<div class="section level2">
+<h2 id="import-a-date-range">Import a date range<a class="anchor" aria-label="anchor" href="#import-a-date-range"></a>
+</h2>
+<p>Pass the workbook path and inclusive start and end dates:</p>
+<p>```{r, eval = FALSE} library(crossmet)</p>
+<p>weather &lt;- ImportWeather( file = “data/crossnacreevy.xlsx”,
+start_date = “2020-01-01”, end_date = “2024-12-31” )</p>
+<p>head(weather) dplyr::glimpse(weather) ```</p>
+<p>Only the annual worksheets needed for the requested date range are
+read. Observations outside the requested dates are removed after the
+sheets are combined.</p>
+</div>
+<div class="section level2">
+<h2 id="returned-data">Returned data<a class="anchor" aria-label="anchor" href="#returned-data"></a>
+</h2>
+<p>The result is a long-format data frame with four columns:</p>
+<ul>
+<li>`Date`: observation date.</li>
+<li>`DOY`: day of year from the workbook.</li>
+<li>`variable`: weather measurement name.</li>
+<li>`value`: numeric daily observation.</li>
+</ul>
+<p>Each date normally appears once per weather variable. This tidy
+structure is suitable for `dplyr` filtering and grouping, the
+summary-table functions and the plotting functions.</p>
+</div>
+<div class="section level2">
+<h2 id="validation-and-missing-data">Validation and missing data<a class="anchor" aria-label="anchor" href="#validation-and-missing-data"></a>
+</h2>
+<p>The importer checks that the workbook exists, that the requested
+dates are valid, and that the selected year worksheets contain the
+expected columns. A requested year without a worksheet produces a
+warning; an import cannot proceed if none of the requested year sheets
+are available.</p>
+<p>Missing measurements are retained as `NA`. Dates absent from the
+workbook are not automatically generated, and the importer does not
+interpolate, impute, calibrate or apply station quality-control flags.
+Check observation coverage and the source workbook before calculating
+totals or trends.</p>
+</div>
+<div class="section level2">
+<h2 id="example-workflow">Example workflow<a class="anchor" aria-label="anchor" href="#example-workflow"></a>
+</h2>
+<p>```{r, eval = FALSE} # Inspect one variable rain &lt;-
+dplyr::filter(weather, variable == “Rainfall mm”)</p>
+</div>
+<div class="section level2">
+<h2 id="create-monthly-summaries-by-year">Create monthly summaries by year<a class="anchor" aria-label="anchor" href="#create-monthly-summaries-by-year"></a>
+</h2>
+<p>monthly &lt;- MonthlySummaryTable(weather)</p>
+</div>
+<div class="section level2">
+<h2 id="create-long-term-monthly-climate-summaries">Create long-term monthly climate summaries<a class="anchor" aria-label="anchor" href="#create-long-term-monthly-climate-summaries"></a>
+</h2>
+<p>climate &lt;- ClimateSummaryTable(weather)</p>
+</div>
+<div class="section level2">
+<h2 id="plot-daily-rainfall">Plot daily rainfall<a class="anchor" aria-label="anchor" href="#plot-daily-rainfall"></a>
+</h2>
+<p>RainfallPlot(weather) ```</p>
+<p>See the <a href="data-dictionary.html">data dictionary</a> for field
+definitions and units, and the <a href="../reference/ImportWeather.html">function reference</a> for all
+arguments and return details.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

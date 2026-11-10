@@ -1,49 +1,47 @@
 # Package index
 
-## Data preparation
+## Data import
 
-Functions for importing and preparing daily weather data.
+Read annual Crossnacreevy Excel worksheets into tidy observations.
 
-- [`ImportWeather()`](https://GABurns.github.io/crossmet/reference/ImportWeather.md)
+- [`ImportWeather()`](https://gaburns.github.io/crossmet/reference/ImportWeather.md)
   : Import weather data from Excel
 
-## Monthly summaries
+## Summary tables
 
-Functions for calculating monthly weather statistics.
+Year-specific monthly summaries and long-term monthly climate normals.
 
-- [`ClimateSummaryTable()`](https://GABurns.github.io/crossmet/reference/ClimateSummaryTable.md)
-  : Monthly Climate Summary Table
-- [`MonthlySummaryTable()`](https://GABurns.github.io/crossmet/reference/MonthlySummaryTable.md)
+- [`MonthlySummaryTable()`](https://gaburns.github.io/crossmet/reference/MonthlySummaryTable.md)
   : Monthly Summary Table
+- [`ClimateSummaryTable()`](https://gaburns.github.io/crossmet/reference/ClimateSummaryTable.md)
+  : Monthly Climate Summary Table
 
-## Visualisations
+## Weather plots
 
-Functions for creating weather data plots.
+Plot daily weather variables and monthly grids.
 
-- [`LeafWetnessPlot()`](https://GABurns.github.io/crossmet/reference/LeafWetnessPlot.md)
-  : Plot leaf wetness
-- [`MeanAirTempPlot()`](https://GABurns.github.io/crossmet/reference/MeanAirTempPlot.md)
-  : Plot mean air temperature
-- [`RainfallPlot()`](https://GABurns.github.io/crossmet/reference/RainfallPlot.md)
-  : title Plot daily rainfall
-- [`RelativeHumidityPlot()`](https://GABurns.github.io/crossmet/reference/RelativeHumidityPlot.md)
-  : Plot relative humidity
-- [`SoilTempPlot()`](https://GABurns.github.io/crossmet/reference/SoilTempPlot.md)
-  : Plot soil temperature
-- [`SolarRadPlot()`](https://GABurns.github.io/crossmet/reference/SolarRadPlot.md)
-  : Plot daily light totals
-- [`TemperatureDifferencePlot()`](https://GABurns.github.io/crossmet/reference/TemperatureDifferencePlot.md)
-  : Plot temperature difference
-- [`TemperaturePlot()`](https://GABurns.github.io/crossmet/reference/TemperaturePlot.md)
+- [`TemperaturePlot()`](https://gaburns.github.io/crossmet/reference/TemperaturePlot.md)
   : Plot minimum and maximum air temperature
-- [`WindSpeedPlot()`](https://GABurns.github.io/crossmet/reference/WindSpeedPlot.md)
+- [`MeanAirTempPlot()`](https://gaburns.github.io/crossmet/reference/MeanAirTempPlot.md)
+  : Plot mean air temperature
+- [`TemperatureDifferencePlot()`](https://gaburns.github.io/crossmet/reference/TemperatureDifferencePlot.md)
+  : Plot temperature difference
+- [`RainfallPlot()`](https://gaburns.github.io/crossmet/reference/RainfallPlot.md)
+  : title Plot daily rainfall
+- [`SoilTempPlot()`](https://gaburns.github.io/crossmet/reference/SoilTempPlot.md)
+  : Plot soil temperature
+- [`WindSpeedPlot()`](https://gaburns.github.io/crossmet/reference/WindSpeedPlot.md)
   : Plot average wind speed
-- [`PlotMonthlyGrid()`](https://GABurns.github.io/crossmet/reference/PlotMonthlyGrid.md)
+- [`RelativeHumidityPlot()`](https://gaburns.github.io/crossmet/reference/RelativeHumidityPlot.md)
+  : Plot relative humidity
+- [`LeafWetnessPlot()`](https://gaburns.github.io/crossmet/reference/LeafWetnessPlot.md)
+  : Plot leaf wetness
+- [`SolarRadPlot()`](https://gaburns.github.io/crossmet/reference/SolarRadPlot.md)
+  : Plot daily light totals
+- [`PlotMonthlyGrid()`](https://gaburns.github.io/crossmet/reference/PlotMonthlyGrid.md)
   : PlotMonthlyGrid
 
-## Utiltity
+## Export
 
-Misc. Functions
-
-- [`SaveWeatherPlots()`](https://GABurns.github.io/crossmet/reference/SaveWeatherPlots.md)
+- [`SaveWeatherPlots()`](https://gaburns.github.io/crossmet/reference/SaveWeatherPlots.md)
   : Save weather plots

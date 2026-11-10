@@ -5,22 +5,22 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title> • crossmet</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Monthly summaries and climate normals • crossmet</title>
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Monthly summaries and climate normals">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">crossmet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,17 +32,19 @@
 <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/importing-data.html">Importing Data</a></li>
-    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries</a></li>
-    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisations</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-guides" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Guides</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-guides">
+<li><h6 class="dropdown-header" data-toc-skip>Getting started</h6></li>
+    <li><a class="dropdown-item" href="../articles/importing-data.html">Importing weather data</a></li>
+    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries and climate normals</a></li>
+    <li><a class="dropdown-item" href="../articles/data-dictionary.html">Data dictionary</a></li>
+    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisation gallery</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet"><span class="fa fab fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
       </ul>
 </div>
 
@@ -55,8 +57,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1></h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Monthly summaries and climate normals</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/GABurns/crossmet/blob/main/vignettes/summary-tables.Rmd" class="external-link"><code>vignettes/summary-tables.Rmd</code></a></small>
@@ -65,29 +66,107 @@
 
     
     
-<table class="table"><tbody>
+<p>```{r, include = FALSE} knitr::opts_chunk$set(collapse = TRUE,
+comment = “#&gt;”) ```</p>
+<div class="section level2">
+<h2 id="two-different-questions">Two different questions<a class="anchor" aria-label="anchor" href="#two-different-questions"></a>
+</h2>
+<p>The package provides two monthly summary functions. They answer
+different questions and should not be used interchangeably.</p>
+<ul>
+<li>`MonthlySummaryTable()`: what were the monthly statistics in
+<strong>each individual year</strong>?</li>
+<li>`ClimateSummaryTable()`: what is the <strong>average monthly
+climatology across years</strong>?</li>
+</ul>
+<p>Both functions expect the long-format data returned by
+`ImportWeather()`.</p>
+</div>
+<div class="section level2">
+<h2 id="monthly-summaries-by-year">Monthly summaries by year<a class="anchor" aria-label="anchor" href="#monthly-summaries-by-year"></a>
+</h2>
+<p>```{r, eval = FALSE} weather &lt;- ImportWeather(
+“data/crossnacreevy.xlsx”, start_date = “2018-01-01”, end_date =
+“2024-12-31” )</p>
+<p>monthly_by_year &lt;- MonthlySummaryTable(weather) monthly_by_year
+```</p>
+<p>The result contains one row per year and weather variable, with
+calendar months as columns. January 2020 and January 2021 remain
+separate rows.</p>
+</div>
+<div class="section level2">
+<h2 id="long-term-monthly-climate-summaries">Long-term monthly climate summaries<a class="anchor" aria-label="anchor" href="#long-term-monthly-climate-summaries"></a>
+</h2>
+<p>```{r, eval = FALSE} climate_normals &lt;-
+ClimateSummaryTable(weather) climate_normals ```</p>
+<p>The climatology function first calculates each year’s monthly
+statistic, then takes the mean of those yearly values for each calendar
+month and variable. For rainfall, for example, it averages annual
+January rainfall totals; it does not average all individual January
+daily readings across the entire period.</p>
+</div>
+<div class="section level2">
+<h2 id="aggregation-rules">Aggregation rules<a class="anchor" aria-label="anchor" href="#aggregation-rules"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Variable type</th>
+<th align="left">Monthly statistic within each year</th>
+<th align="left">Across-year climatology</th>
+</tr></thead>
+<tbody>
 <tr class="odd">
-<td>title: “summary-tables”</td>
+<td align="left">Rainfall and daily light totals</td>
+<td align="left">Sum of daily values</td>
+<td align="left">Mean of yearly monthly totals</td>
 </tr>
 <tr class="even">
-<td>output: rmarkdown::html_vignette</td>
+<td align="left">Daily maximum temperature</td>
+<td align="left">Maximum daily value</td>
+<td align="left">Mean of yearly monthly maxima</td>
 </tr>
 <tr class="odd">
-<td>vignette: &gt;</td>
+<td align="left">Daily minimum temperature</td>
+<td align="left">Minimum daily value</td>
+<td align="left">Mean of yearly monthly minima</td>
 </tr>
 <tr class="even">
-<td>%</td>
+<td align="left">Other variables</td>
+<td align="left">Mean of daily values</td>
+<td align="left">Mean of yearly monthly means</td>
 </tr>
-<tr class="odd">
-<td>%</td>
-</tr>
-<tr class="even">
-<td>%</td>
-</tr>
-</tbody></table>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GABurns/crossmet" class="external-link">crossmet</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="missing-observations">Missing observations<a class="anchor" aria-label="anchor" href="#missing-observations"></a>
+</h2>
+<p>Missing values are excluded from a calculation. If a
+year-month-variable group contains no observed values, its monthly
+result is `NA`. Climate summaries exclude missing yearly monthly values
+from the across-year mean; if every year is missing for that month and
+variable, the climatological result is `NA`.</p>
+<p>Neither function fills missing dates or adjusts for unequal
+observation coverage. For comparisons, inspect the number of valid
+observations in each year and month and consider whether the source data
+are sufficiently complete.</p>
+</div>
+<div class="section level2">
+<h2 id="choosing-a-function">Choosing a function<a class="anchor" aria-label="anchor" href="#choosing-a-function"></a>
+</h2>
+<p>Use `MonthlySummaryTable()` to compare specific years, investigate
+unusual seasons or prepare annual reporting tables. Use
+`ClimateSummaryTable()` when you want a long-term seasonal profile.
+Always report the years included and review coverage before interpreting
+climate differences.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

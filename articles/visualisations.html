@@ -5,22 +5,22 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>visualisations • crossmet</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Weather graph gallery • crossmet</title>
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="visualisations">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Weather graph gallery">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">crossmet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,17 +32,19 @@
 <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/importing-data.html">Importing Data</a></li>
-    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries</a></li>
-    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisations</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-guides" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Guides</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-guides">
+<li><h6 class="dropdown-header" data-toc-skip>Getting started</h6></li>
+    <li><a class="dropdown-item" href="../articles/importing-data.html">Importing weather data</a></li>
+    <li><a class="dropdown-item" href="../articles/summary-tables.html">Monthly summaries and climate normals</a></li>
+    <li><a class="dropdown-item" href="../articles/data-dictionary.html">Data dictionary</a></li>
+    <li><a class="dropdown-item" href="../articles/visualisations.html">Visualisation gallery</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet"><span class="fa fab fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/GABurns/crossmet" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
       </ul>
 </div>
 
@@ -55,8 +57,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>visualisations</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Weather graph gallery</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/GABurns/crossmet/blob/main/vignettes/visualisations.Rmd" class="external-link"><code>vignettes/visualisations.Rmd</code></a></small>
@@ -65,9 +66,107 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GABurns/crossmet" class="external-link">crossmet</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<p>```{r, include = FALSE} knitr::opts_chunk$set( collapse = TRUE,
+comment = “#&gt;”, fig.width = 8, fig.height = 4.8, out.width = “100%” )
+library(crossmet) library(dplyr) library(lubridate)</p>
+<div class="section level2">
+<h2 id="reproducible-illustrative-observations-these-are-not-station-measurements-">Reproducible illustrative observations; these are not station
+measurements.<a class="anchor" aria-label="anchor" href="#reproducible-illustrative-observations-these-are-not-station-measurements-"></a>
+</h2>
+<p>set.seed(42) dates &lt;- seq.Date(as.Date(“2024-01-01”),
+as.Date(“2024-12-31”), by = “day”) variables &lt;- c( “Temperature deg C
+Min”, “Temperature deg C Max”, “Air temp Mean”, “Temp diff deg C”,
+“Rainfall mm”, “Soil 15cm deg C”, “Soil 45cm deg C”, “Average Wind speed
+Km/h”, “RH (%)”, “Leaf wetness (U)”, “Lite totals daily (W/m2)” )
+sample_weather &lt;- expand.grid(Date = dates, variable = variables)
+sample_weather &lt;- sample_weather |&gt; mutate( DOY = yday(Date),
+seasonal = 10 + 7 * sin(2 * pi * (DOY - 100) / 365), value = case_when(
+variable == “Temperature deg C Min” ~ seasonal - runif(n(), 1, 5),
+variable == “Temperature deg C Max” ~ seasonal + runif(n(), 2, 7),
+variable == “Air temp Mean” ~ seasonal + rnorm(n(), 0, 1), variable ==
+“Temp diff deg C” ~ runif(n(), 2, 8), variable == “Rainfall mm” ~
+rgamma(n(), shape = 1.2, scale = 2), variable == “Soil 15cm deg C” ~
+seasonal - 1 + rnorm(n(), 0, 1), variable == “Soil 45cm deg C” ~
+seasonal - 2 + rnorm(n(), 0, 0.7), variable == “Average Wind speed Km/h”
+~ rgamma(n(), 3, 2), variable == “RH (%)” ~ pmin(100, pmax(20,
+rnorm(n(), 78, 12))), variable == “Leaf wetness (U)” ~ runif(n(), 0, 1),
+variable == “Lite totals daily (W/m2)” ~ pmax(0, 100 + 90 * sin(2 * pi *
+(DOY - 80) / 365) + rnorm(n(), 0, 20)), TRUE ~ NA_real_ ) ) |&gt;
+select(Date, DOY, variable, value) ```</p>
+</div>
+<div class="section level2">
+<h2 id="about-this-gallery">About this gallery<a class="anchor" aria-label="anchor" href="#about-this-gallery"></a>
+</h2>
+<p>The plots below demonstrate the package’s plotting functions using a
+reproducible <strong>synthetic</strong> year of daily observations. They
+illustrate plot types and layout only; they are not actual Crossnacreevy
+station data.</p>
+<div class="section level3">
+<h3 id="air-temperature">Air temperature<a class="anchor" aria-label="anchor" href="#air-temperature"></a>
+</h3>
+<p>Daily minimum and maximum temperature are shown together to highlight
+the diurnal range and seasonal cycle.</p>
+<p>```{r air-temperature} TemperaturePlot(sample_weather) ```</p>
+</div>
+<div class="section level3">
+<h3 id="rainfall">Rainfall<a class="anchor" aria-label="anchor" href="#rainfall"></a>
+</h3>
+<p>Daily rainfall is shown as a time series of daily totals.</p>
+<p>```{r rainfall} RainfallPlot(sample_weather) ```</p>
+</div>
+<div class="section level3">
+<h3 id="relative-humidity">Relative humidity<a class="anchor" aria-label="anchor" href="#relative-humidity"></a>
+</h3>
+<p>```{r relative-humidity} RelativeHumidityPlot(sample_weather) ```</p>
+</div>
+<div class="section level3">
+<h3 id="soil-temperature">Soil temperature<a class="anchor" aria-label="anchor" href="#soil-temperature"></a>
+</h3>
+<p>The soil temperature plot compares the 15 cm and 45 cm
+measurements.</p>
+<p>```{r soil-temperature} SoilTempPlot(sample_weather) ```</p>
+</div>
+<div class="section level3">
+<h3 id="wind-speed">Wind speed<a class="anchor" aria-label="anchor" href="#wind-speed"></a>
+</h3>
+<p>```{r wind-speed} WindSpeedPlot(sample_weather) ```</p>
+</div>
+<div class="section level3">
+<h3 id="leaf-wetness-and-light">Leaf wetness and light<a class="anchor" aria-label="anchor" href="#leaf-wetness-and-light"></a>
+</h3>
+<p>```{r leaf-wetness} LeafWetnessPlot(sample_weather) ```</p>
+<p>```{r solar-radiation} SolarRadPlot(sample_weather) ```</p>
+</div>
+<div class="section level3">
+<h3 id="monthly-grid-daily-rainfall">Monthly grid: daily rainfall<a class="anchor" aria-label="anchor" href="#monthly-grid-daily-rainfall"></a>
+</h3>
+<p>Each panel represents a calendar month, with day of month on the
+horizontal axis.</p>
+<p>```{r monthly-rainfall} PlotMonthlyGrid(sample_weather, variable =
+“Rainfall mm”) ```</p>
+</div>
+<div class="section level3">
+<h3 id="monthly-grid-temperature-range">Monthly grid: temperature range<a class="anchor" aria-label="anchor" href="#monthly-grid-temperature-range"></a>
+</h3>
+<p>The shaded ribbon spans the daily minimum and maximum
+temperatures.</p>
+<p>```{r monthly-temperature-range} PlotMonthlyGrid(sample_weather,
+variable = “temperature_range”) ```</p>
+</div>
+<div class="section level3">
+<h3 id="exporting-plots">Exporting plots<a class="anchor" aria-label="anchor" href="#exporting-plots"></a>
+</h3>
+<p>Use `SaveWeatherPlots()` to write selected plots and monthly grids to
+a directory. The function invisibly returns the paths of the files
+created.</p>
+<p>```{r export-example, eval = FALSE} files &lt;- SaveWeatherPlots(
+sample_weather, plots = c(“temperature”, “rainfall”,
+“relative_humidity”), monthly_grids = TRUE, path = “weather-plots” )
+files ```</p>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
