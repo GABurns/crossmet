@@ -1,4 +1,79 @@
-url: https://gaburns.github.io/crossmet/
+
+url: https://GABurns.github.io/crossmet/
+
 template:
   bootstrap: 5
+
+home:
+  title: "Crossnacreevy Weather"
+  description: >
+    Tools for processing, summarising and visualising
+    daily meteorological observations from the AFBI
+    Crossnacreevy weather station.
+
+navbar:
+  structure:
+    left:
+      - intro
+      - reference
+      - articles
+      - news
+    right:
+      - github
+
+  components:
+    intro:
+      text: Home
+      href: index.html
+
+    articles:
+      text: Articles
+      menu:
+        - text: "Importing Data"
+          href: articles/importing-data.html
+        - text: "Monthly summaries"
+          href: articles/summary-tables.html
+        - text: "Visualisations"
+          href: articles/visualisations.html
+
+    github:
+      icon: fab fa-github
+      href: https://github.com/GABurns/crossmet
+
+articles:
+  - title: Getting started
+    navbar: Getting started
+    contents:
+      - importing-data
+      - summary-tables
+
+  - title: Visualisation
+    navbar: Visualisation
+    contents:
+      - visualisations
+
+
+reference:
+  - title: "Data preparation"
+    desc: "Functions for importing and preparing daily weather data."
+    contents:
+      - starts_with("Import")
+
+  - title: "Monthly summaries"
+    desc: "Functions for calculating monthly weather statistics."
+    contents:
+      - ends_with("Table")
+
+  - title: "Visualisations"
+    desc: "Functions for creating weather data plots."
+    contents:
+      - ends_with("Plot")
+      - starts_with("Plot")
+
+  - title: "Utiltity"
+    desc: "Misc. Functions"
+    contents:
+      - SaveWeatherPlots
+
+
 

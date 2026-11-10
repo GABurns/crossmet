@@ -9,8 +9,7 @@ Authors@R: c(
       role = c("aut", "cre")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: Processes daily meteorological summaries from the AFBI Crossnacreevy weather station into monthly summary tables and data visualisations. Provides tools for exploring weather patterns, seasonal variation and historical meteorological trends.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

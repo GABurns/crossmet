@@ -3,7 +3,7 @@
 export(ImportWeather)
 export(LeafWetnessPlot)
 export(MeanAirTempPlot)
-export(MonthlySummary)
+export(MonthlySummaryTable)
 export(PlotMonthlyGrid)
 export(RainfallPlot)
 export(RelativeHumidityPlot)

@@ -1,4 +1,4 @@
-#' @title Monthly Summary
+#' @title Monthly Summary Table
 #' @author Gareth Burns
 #' @description Creates a monthly summary table
 #' @param data A tibble or data.frame containing weather data.
@@ -8,7 +8,7 @@
 #' @return A tibble
 #' @export
 
-MonthlySummary <- function(data, ...) {
+MonthlySummaryTable <- function(data, ...) {
 
   data |>
   mutate(month = month(Date, label = TRUE, abbr = TRUE)) |>

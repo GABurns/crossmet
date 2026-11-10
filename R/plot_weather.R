@@ -6,6 +6,7 @@
 #' @return A ggplot2 object.
 #' @import ggplot2
 #' @importFrom dplyr filter mutate arrange
+#' @noRd
 
 
 plot_weather_variable <- function(data,
