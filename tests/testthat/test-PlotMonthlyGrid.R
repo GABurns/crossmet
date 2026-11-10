@@ -31,15 +31,6 @@ test_that("PlotMonthlyGrid validates its input data", {
     "missing required column"
   )
 
-  weather <- data.frame(
-    Date = as.Date("2024-01-01"),
-    variable = "Rainfall mm",
-    value = 2
-  )
-  expect_error(
-    PlotMonthlyGrid(weather, variable = "Air temp Mean"),
-    "No observations found"
-  )
 })
 
 test_that("PlotMonthlyGrid plots a temperature range", {

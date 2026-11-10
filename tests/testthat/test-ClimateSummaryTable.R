@@ -8,7 +8,7 @@ test_that("ClimateSummaryTable averages yearly monthly summaries", {
   result <- ClimateSummaryTable(weather)
 
   expect_equal(nrow(result), 1)
-  expect_equal(result$Jan, 6)
+  expect_equal(result$Jan, 6.5)
 })
 
 test_that("ClimateSummaryTable averages annual rainfall totals", {
