@@ -49,6 +49,8 @@ navbar:
           href: articles/data-dictionary.html
         - text: "Visualisation gallery"
           href: articles/visualisations.html
+        - text: "Customising plots with ggplot2"
+          href: articles/ggplot-customisation.html
     github:
       icon: fab fa-github
       href: https://github.com/GABurns/crossmet
@@ -65,6 +67,7 @@ articles:
     contents:
       - summary-tables
       - visualisations
+      - ggplot-customisation
 
 reference:
   - title: Data import
