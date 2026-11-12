@@ -1,16 +1,10 @@
 #' @title Monthly Climate Summary Table
 #' @author Gareth Burns
 #' @description Calculates long-term monthly climatological summaries across
-#'   years. Daily observations are first summarised within each calendar year:
-#'   rainfall and solar radiation are summed, daily maximum and minimum
-#'   temperatures are represented by monthly maxima and minima, and other
-#'   variables are represented by monthly means. The resulting yearly monthly
-#'   values are then averaged across years.
+#'   years. Daily observations are summarised within each calendar year and
+#'   the resulting yearly monthly values are averaged across years.
 #' @param data A data frame containing Date, variable, and value columns.
 #' @return A tibble with one row per variable and one column per calendar month.
-#'   Years with no non-missing observations for a month-variable combination
-#'   are excluded from that climatological average; if all years are missing,
-#'   the result is NA.
 #' @export
 ClimateSummaryTable <- function(data) {
   required_cols <- c("Date", "variable", "value")
@@ -30,18 +24,12 @@ ClimateSummaryTable <- function(data) {
     dplyr::summarise(
       monthly_value = {
         observed <- .data$value[!is.na(.data$value)]
-        if (!length(observed)) {
-          NA_real_
-        } else if (dplyr::first(.data$variable) %in%
-                   c("Rainfall mm", "Lite totals daily (W/m2)")) {
-          sum(observed)
-        } else if (dplyr::first(.data$variable) == "Temperature deg C Max") {
-          max(observed)
-        } else if (dplyr::first(.data$variable) == "Temperature deg C Min") {
-          min(observed)
-        } else {
-          mean(observed)
-        }
+        if (!length(observed)) NA_real_
+        else if (dplyr::first(.data$variable) %in%
+                 c("Rainfall mm", "Lite totals daily (W/m2)")) sum(observed)
+        else if (dplyr::first(.data$variable) == "Temperature deg C Max") max(observed)
+        else if (dplyr::first(.data$variable) == "Temperature deg C Min") min(observed)
+        else mean(observed)
       },
       .groups = "drop"
     )
@@ -56,8 +44,8 @@ ClimateSummaryTable <- function(data) {
       .groups = "drop"
     ) |>
     tidyr::pivot_wider(
-      names_from = .data$month,
-      values_from = .data$climatological_value
+      names_from = "month",
+      values_from = "climatological_value"
     ) |>
     dplyr::arrange(.data$variable)
 }
