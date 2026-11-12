@@ -71,8 +71,6 @@
 
     
     
-<p>```{r, include = FALSE} knitr::opts_chunk$set(collapse = TRUE,
-comment = “#&gt;”) ```</p>
 <div class="section level2">
 <h2 id="workbook-layout">Workbook layout<a class="anchor" aria-label="anchor" href="#workbook-layout"></a>
 </h2>
@@ -93,10 +91,17 @@ the units exposed by this package.</p>
 <h2 id="import-a-date-range">Import a date range<a class="anchor" aria-label="anchor" href="#import-a-date-range"></a>
 </h2>
 <p>Pass the workbook path and inclusive start and end dates:</p>
-<p>```{r, eval = FALSE} library(crossmet)</p>
-<p>weather &lt;- ImportWeather( file = “data/crossnacreevy.xlsx”,
-start_date = “2020-01-01”, end_date = “2024-12-31” )</p>
-<p>head(weather) dplyr::glimpse(weather) ```</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GABurns/crossmet" class="external-link">crossmet</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportWeather.html">ImportWeather</a></span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="st">"data/crossnacreevy.xlsx"</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="st">"2020-01-01"</span>,</span>
+<span>  end_date <span class="op">=</span> <span class="st">"2024-12-31"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span></code></pre></div>
 <p>Only the annual worksheets needed for the requested date range are
 read. Observations outside the requested dates are removed after the
 sheets are combined.</p>
@@ -132,23 +137,18 @@ totals or trends.</p>
 <div class="section level2">
 <h2 id="example-workflow">Example workflow<a class="anchor" aria-label="anchor" href="#example-workflow"></a>
 </h2>
-<p>```{r, eval = FALSE} # Inspect one variable rain &lt;-
-dplyr::filter(weather, variable == “Rainfall mm”)</p>
-</div>
-<div class="section level2">
-<h2 id="create-monthly-summaries-by-year">Create monthly summaries by year<a class="anchor" aria-label="anchor" href="#create-monthly-summaries-by-year"></a>
-</h2>
-<p>monthly &lt;- MonthlySummaryTable(weather)</p>
-</div>
-<div class="section level2">
-<h2 id="create-long-term-monthly-climate-summaries">Create long-term monthly climate summaries<a class="anchor" aria-label="anchor" href="#create-long-term-monthly-climate-summaries"></a>
-</h2>
-<p>climate &lt;- ClimateSummaryTable(weather)</p>
-</div>
-<div class="section level2">
-<h2 id="plot-daily-rainfall">Plot daily rainfall<a class="anchor" aria-label="anchor" href="#plot-daily-rainfall"></a>
-</h2>
-<p>RainfallPlot(weather) ```</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Inspect one variable</span></span>
+<span><span class="va">rain</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">weather</span>, <span class="va">variable</span> <span class="op">==</span> <span class="st">"Rainfall mm"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create monthly summaries by year</span></span>
+<span><span class="va">monthly</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MonthlySummaryTable.html">MonthlySummaryTable</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create long-term monthly climate summaries</span></span>
+<span><span class="va">climate</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ClimateSummaryTable.html">ClimateSummaryTable</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot daily rainfall</span></span>
+<span><span class="fu"><a href="../reference/RainfallPlot.html">RainfallPlot</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span></code></pre></div>
 <p>See the <a href="data-dictionary.html">data dictionary</a> for field
 definitions and units, and the <a href="../reference/ImportWeather.html">function reference</a> for all
 arguments and return details.</p>

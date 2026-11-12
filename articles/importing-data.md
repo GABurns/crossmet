@@ -1,8 +1,5 @@
 # Importing Crossnacreevy weather data
 
-\`\`\`{r, include = FALSE} knitr::opts_chunk\$set(collapse = TRUE,
-comment = “#\>”) \`\`\`
-
 ## Workbook layout
 
 \`ImportWeather()\` reads an Excel workbook containing one worksheet per
@@ -24,12 +21,19 @@ the units exposed by this package.
 
 Pass the workbook path and inclusive start and end dates:
 
-\`\`\`{r, eval = FALSE} library(crossmet)
+``` r
 
-weather \<- ImportWeather( file = “data/crossnacreevy.xlsx”, start_date
-= “2020-01-01”, end_date = “2024-12-31” )
+library(crossmet)
 
-head(weather) dplyr::glimpse(weather) \`\`\`
+weather <- ImportWeather(
+  file = "data/crossnacreevy.xlsx",
+  start_date = "2020-01-01",
+  end_date = "2024-12-31"
+)
+
+head(weather)
+dplyr::glimpse(weather)
+```
 
 Only the annual worksheets needed for the requested date range are read.
 Observations outside the requested dates are removed after the sheets
@@ -64,20 +68,20 @@ totals or trends.
 
 ## Example workflow
 
-\`\`\`{r, eval = FALSE} \# Inspect one variable rain \<-
-dplyr::filter(weather, variable == “Rainfall mm”)
+``` r
 
-## Create monthly summaries by year
+# Inspect one variable
+rain <- dplyr::filter(weather, variable == "Rainfall mm")
 
-monthly \<- MonthlySummaryTable(weather)
+# Create monthly summaries by year
+monthly <- MonthlySummaryTable(weather)
 
-## Create long-term monthly climate summaries
+# Create long-term monthly climate summaries
+climate <- ClimateSummaryTable(weather)
 
-climate \<- ClimateSummaryTable(weather)
-
-## Plot daily rainfall
-
-RainfallPlot(weather) \`\`\`
+# Plot daily rainfall
+RainfallPlot(weather)
+```
 
 See the [data
 dictionary](https://gaburns.github.io/crossmet/articles/data-dictionary.md)
