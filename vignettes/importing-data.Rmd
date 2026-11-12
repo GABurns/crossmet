@@ -7,9 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-\`\`\`{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-\`\`\`
+```
 
 # Workbook layout
 
@@ -31,7 +31,7 @@ units exposed by this package.
 
 Pass the workbook path and inclusive start and end dates:
 
-\`\`\`{r, eval = FALSE}
+```{r, eval = FALSE}
 library(crossmet)
 
 weather <- ImportWeather(
@@ -42,7 +42,7 @@ weather <- ImportWeather(
 
 head(weather)
 dplyr::glimpse(weather)
-\`\`\`
+```
 
 Only the annual worksheets needed for the requested date range are read.
 Observations outside the requested dates are removed after the sheets are
@@ -75,7 +75,7 @@ coverage and the source workbook before calculating totals or trends.
 
 # Example workflow
 
-\`\`\`{r, eval = FALSE}
+```{r, eval = FALSE}
 # Inspect one variable
 rain <- dplyr::filter(weather, variable == "Rainfall mm")
 
@@ -87,7 +87,7 @@ climate <- ClimateSummaryTable(weather)
 
 # Plot daily rainfall
 RainfallPlot(weather)
-\`\`\`
+```
 
 See the [data dictionary](data-dictionary.html) for field definitions and
 units, and the [function reference](../reference/ImportWeather.html) for all
