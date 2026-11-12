@@ -18,9 +18,7 @@ import(ggplot2)
 importFrom(dplyr,
   arrange,
   bind_rows,
-  case_when,
   filter,
-  first,
   group_by,
   mutate,
   summarise
@@ -28,7 +26,8 @@ importFrom(dplyr,
 importFrom(janitor,make_clean_names)
 importFrom(lubridate,
   day,
-  month
+  month,
+  year
 )
 importFrom(readxl,
   cell_limits,

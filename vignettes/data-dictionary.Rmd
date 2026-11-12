@@ -7,9 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-\`\`\`{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-\`\`\`
+```
 
 # Imported data structure
 
@@ -60,7 +60,7 @@ interpreting monthly totals or long-term summaries.
 
 # Example
 
-\`\`\`{r, eval = FALSE}
+```{r, eval = FALSE}
 weather <- ImportWeather(
   file = "crossnacreevy.xlsx",
   start_date = "2020-01-01",
@@ -68,7 +68,7 @@ weather <- ImportWeather(
 )
 
 dplyr::filter(weather, variable == "Rainfall mm")
-\`\`\`
+```
 
 # Source and interpretation
 

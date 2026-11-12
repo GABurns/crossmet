@@ -7,9 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-\`\`\`{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-\`\`\`
+```
 
 # Two different questions
 
@@ -25,7 +25,7 @@ Both functions expect the long-format data returned by \`ImportWeather()\`.
 
 # Monthly summaries by year
 
-\`\`\`{r, eval = FALSE}
+```{r, eval = FALSE}
 weather <- ImportWeather(
   "data/crossnacreevy.xlsx",
   start_date = "2018-01-01",
@@ -34,17 +34,17 @@ weather <- ImportWeather(
 
 monthly_by_year <- MonthlySummaryTable(weather)
 monthly_by_year
-\`\`\`
+```
 
 The result contains one row per year and weather variable, with calendar months
 as columns. January 2020 and January 2021 remain separate rows.
 
 # Long-term monthly climate summaries
 
-\`\`\`{r, eval = FALSE}
+```{r, eval = FALSE}
 climate_normals <- ClimateSummaryTable(weather)
 climate_normals
-\`\`\`
+```
 
 The climatology function first calculates each year's monthly statistic, then
 takes the mean of those yearly values for each calendar month and variable.

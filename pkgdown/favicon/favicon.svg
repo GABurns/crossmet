@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc" width="512" height="512"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><title id="title">crossmet hexagonal weather mark</title><desc id="desc">A deep blue hexagon containing a sun, cloud, rainfall and a green field horizon.</desc><defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf6fb"></stop>
+      <stop offset="1" stop-color="#c8e5f1"></stop>
+    </linearGradient>
+    <clipPath id="hex">
+      <path d="M256 28 454 142v228L256 484 58 370V142Z"></path>
+    </clipPath>
+  </defs><path d="M256 16 464 136v240L256 496 48 376V136Z" fill="#173b57"></path><path d="M256 42 442 149v214L256 470 70 363V149Z" fill="url(#sky)" stroke="#fff" stroke-width="8"></path><g clip-path="url(#hex)">
+    <circle cx="333" cy="171" r="49" fill="#f2b84b"></circle>
+    <g stroke="#e5a735" stroke-width="10" stroke-linecap="round">
+      <path d="M333 101v-20M333 261v-20M263 171h-20M423 171h-20M284 122l-14-14M396 234l-14-14M382 122l14-14M270 234l14-14"></path>
+    </g>
+    <path d="M75 303c34-47 73-54 113-23 32-47 105-48 135-4 49-12 94 19 104 61v48H75Z" fill="#fff" opacity=".96"></path>
+    <path d="M142 304c-5-35 22-64 58-64 23-46 91-43 110 4 34-4 60 21 60 51 0 8-2 15-5 22H151Z" fill="#fff" stroke="#477b99" stroke-width="12" stroke-linejoin="round"></path>
+    <g fill="none" stroke="#2f83ad" stroke-width="13" stroke-linecap="round">
+      <path d="m190 343-17 38M256 343l-17 38M322 343l-17 38"></path>
+    </g>
+    <path d="M50 415c69-37 132-39 206-8 70-31 137-28 206 8v90H50Z" fill="#5d9465"></path>
+    <path d="M50 439c77-34 145-27 206 0 68-29 137-31 206 0" fill="none" stroke="#37734d" stroke-width="12"></path>
+  </g><path d="M256 42 442 149v214L256 470 70 363V149Z" fill="none" stroke="#173b57" stroke-width="10"></path><text x="256" y="455" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" letter-spacing="4" fill="#fff">crossmet</text></svg>

@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-\`\`\`{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -49,7 +49,7 @@ sample_weather <- sample_weather |>
     )
   ) |>
   select(Date, DOY, variable, value)
-\`\`\`
+```
 
 # About this gallery
 
@@ -62,71 +62,71 @@ types and layout only; they are not actual Crossnacreevy station data.
 Daily minimum and maximum temperature are shown together to highlight the
 diurnal range and seasonal cycle.
 
-\`\`\`{r air-temperature}
+```{r air-temperature}
 TemperaturePlot(sample_weather)
-\`\`\`
+```
 
 ## Rainfall
 
 Daily rainfall is shown as a time series of daily totals.
 
-\`\`\`{r rainfall}
+```{r rainfall}
 RainfallPlot(sample_weather)
-\`\`\`
+```
 
 ## Relative humidity
 
-\`\`\`{r relative-humidity}
+```{r relative-humidity}
 RelativeHumidityPlot(sample_weather)
-\`\`\`
+```
 
 ## Soil temperature
 
 The soil temperature plot compares the 15 cm and 45 cm measurements.
 
-\`\`\`{r soil-temperature}
+```{r soil-temperature}
 SoilTempPlot(sample_weather)
-\`\`\`
+```
 
 ## Wind speed
 
-\`\`\`{r wind-speed}
+```{r wind-speed}
 WindSpeedPlot(sample_weather)
-\`\`\`
+```
 
 ## Leaf wetness and light
 
-\`\`\`{r leaf-wetness}
+```{r leaf-wetness}
 LeafWetnessPlot(sample_weather)
-\`\`\`
+```
 
-\`\`\`{r solar-radiation}
+```{r solar-radiation}
 SolarRadPlot(sample_weather)
-\`\`\`
+```
 
 ## Monthly grid: daily rainfall
 
 Each panel represents a calendar month, with day of month on the horizontal
 axis.
 
-\`\`\`{r monthly-rainfall}
+```{r monthly-rainfall}
 PlotMonthlyGrid(sample_weather, variable = "Rainfall mm")
-\`\`\`
+```
 
 ## Monthly grid: temperature range
 
 The shaded ribbon spans the daily minimum and maximum temperatures.
 
-\`\`\`{r monthly-temperature-range}
+```{r monthly-temperature-range}
 PlotMonthlyGrid(sample_weather, variable = "temperature_range")
-\`\`\`
+```
 
 ## Exporting plots
 
 Use \`SaveWeatherPlots()\` to write selected plots and monthly grids to a
 directory. The function invisibly returns the paths of the files created.
 
-\`\`\`{r export-example, eval = FALSE}
+```{r export-example, eval = FALSE}
 files <- SaveWeatherPlots(
   sample_weather,
   plots = c("temperature", "rainfall", "relative_humidity"),
@@ -134,4 +134,4 @@ files <- SaveWeatherPlots(
   path = "weather-plots"
 )
 files
-\`\`\`
+```
