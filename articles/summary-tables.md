@@ -1,8 +1,5 @@
 # Monthly summaries and climate normals
 
-\`\`\`{r, include = FALSE} knitr::opts_chunk\$set(collapse = TRUE,
-comment = “#\>”) \`\`\`
-
 ## Two different questions
 
 The package provides two monthly summary functions. They answer
@@ -18,19 +15,28 @@ Both functions expect the long-format data returned by
 
 ## Monthly summaries by year
 
-\`\`\`{r, eval = FALSE} weather \<- ImportWeather(
-“data/crossnacreevy.xlsx”, start_date = “2018-01-01”, end_date =
-“2024-12-31” )
+``` r
 
-monthly_by_year \<- MonthlySummaryTable(weather) monthly_by_year \`\`\`
+weather <- ImportWeather(
+  "data/crossnacreevy.xlsx",
+  start_date = "2018-01-01",
+  end_date = "2024-12-31"
+)
+
+monthly_by_year <- MonthlySummaryTable(weather)
+monthly_by_year
+```
 
 The result contains one row per year and weather variable, with calendar
 months as columns. January 2020 and January 2021 remain separate rows.
 
 ## Long-term monthly climate summaries
 
-\`\`\`{r, eval = FALSE} climate_normals \<- ClimateSummaryTable(weather)
-climate_normals \`\`\`
+``` r
+
+climate_normals <- ClimateSummaryTable(weather)
+climate_normals
+```
 
 The climatology function first calculates each year’s monthly statistic,
 then takes the mean of those yearly values for each calendar month and

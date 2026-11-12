@@ -36,17 +36,24 @@ gallery](https://gaburns.github.io/crossmet/articles/visualisations.md)
 
 ## Start here
 
-\`\`\`r install.packages(“pak”) pak::pak(“GABurns/crossmet”)
+``` r
+
+install.packages("pak")
+pak::pak("GABurns/crossmet")
 
 library(crossmet)
 
-weather \<- ImportWeather( file = “path/to/crossnacreevy.xlsx”,
-start_date = “2020-01-01”, end_date = “2024-12-31” )
+weather <- ImportWeather(
+  file = "path/to/crossnacreevy.xlsx",
+  start_date = "2020-01-01",
+  end_date = "2024-12-31"
+)
 
-monthly \<- MonthlySummaryTable(weather) climate \<-
-ClimateSummaryTable(weather)
+monthly <- MonthlySummaryTable(weather)
+climate <- ClimateSummaryTable(weather)
 
-RainfallPlot(weather) \`\`\`
+RainfallPlot(weather)
+```
 
 The workbook is expected to contain one worksheet per year, named with
 its four-digit year, and the Crossnacreevy weather-station column

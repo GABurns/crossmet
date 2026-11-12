@@ -5,6 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Weather graph gallery • crossmet</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -65,34 +70,6 @@
 
     
     
-<p>```{r, include = FALSE} knitr::opts_chunk$set( collapse = TRUE,
-comment = “#&gt;”, fig.width = 8, fig.height = 4.8, out.width = “100%” )
-library(crossmet) library(dplyr) library(lubridate)</p>
-<div class="section level2">
-<h2 id="reproducible-illustrative-observations-these-are-not-station-measurements-">Reproducible illustrative observations; these are not station
-measurements.<a class="anchor" aria-label="anchor" href="#reproducible-illustrative-observations-these-are-not-station-measurements-"></a>
-</h2>
-<p>set.seed(42) dates &lt;- seq.Date(as.Date(“2024-01-01”),
-as.Date(“2024-12-31”), by = “day”) variables &lt;- c( “Temperature deg C
-Min”, “Temperature deg C Max”, “Air temp Mean”, “Temp diff deg C”,
-“Rainfall mm”, “Soil 15cm deg C”, “Soil 45cm deg C”, “Average Wind speed
-Km/h”, “RH (%)”, “Leaf wetness (U)”, “Lite totals daily (W/m2)” )
-sample_weather &lt;- expand.grid(Date = dates, variable = variables)
-sample_weather &lt;- sample_weather |&gt; mutate( DOY = yday(Date),
-seasonal = 10 + 7 * sin(2 * pi * (DOY - 100) / 365), value = case_when(
-variable == “Temperature deg C Min” ~ seasonal - runif(n(), 1, 5),
-variable == “Temperature deg C Max” ~ seasonal + runif(n(), 2, 7),
-variable == “Air temp Mean” ~ seasonal + rnorm(n(), 0, 1), variable ==
-“Temp diff deg C” ~ runif(n(), 2, 8), variable == “Rainfall mm” ~
-rgamma(n(), shape = 1.2, scale = 2), variable == “Soil 15cm deg C” ~
-seasonal - 1 + rnorm(n(), 0, 1), variable == “Soil 45cm deg C” ~
-seasonal - 2 + rnorm(n(), 0, 0.7), variable == “Average Wind speed Km/h”
-~ rgamma(n(), 3, 2), variable == “RH (%)” ~ pmin(100, pmax(20,
-rnorm(n(), 78, 12))), variable == “Leaf wetness (U)” ~ runif(n(), 0, 1),
-variable == “Lite totals daily (W/m2)” ~ pmax(0, 100 + 90 * sin(2 * pi *
-(DOY - 80) / 365) + rnorm(n(), 0, 20)), TRUE ~ NA_real_ ) ) |&gt;
-select(Date, DOY, variable, value) ```</p>
-</div>
 <div class="section level2">
 <h2 id="about-this-gallery">About this gallery<a class="anchor" aria-label="anchor" href="#about-this-gallery"></a>
 </h2>
@@ -105,52 +82,68 @@ station data.</p>
 </h3>
 <p>Daily minimum and maximum temperature are shown together to highlight
 the diurnal range and seasonal cycle.</p>
-<p>```{r air-temperature} TemperaturePlot(sample_weather) ```</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/TemperaturePlot.html">TemperaturePlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/air-temperature-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="rainfall">Rainfall<a class="anchor" aria-label="anchor" href="#rainfall"></a>
 </h3>
 <p>Daily rainfall is shown as a time series of daily totals.</p>
-<p>```{r rainfall} RainfallPlot(sample_weather) ```</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/RainfallPlot.html">RainfallPlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/rainfall-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="relative-humidity">Relative humidity<a class="anchor" aria-label="anchor" href="#relative-humidity"></a>
 </h3>
-<p>```{r relative-humidity} RelativeHumidityPlot(sample_weather) ```</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/RelativeHumidityPlot.html">RelativeHumidityPlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/relative-humidity-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="soil-temperature">Soil temperature<a class="anchor" aria-label="anchor" href="#soil-temperature"></a>
 </h3>
 <p>The soil temperature plot compares the 15 cm and 45 cm
 measurements.</p>
-<p>```{r soil-temperature} SoilTempPlot(sample_weather) ```</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/SoilTempPlot.html">SoilTempPlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/soil-temperature-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="wind-speed">Wind speed<a class="anchor" aria-label="anchor" href="#wind-speed"></a>
 </h3>
-<p>```{r wind-speed} WindSpeedPlot(sample_weather) ```</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/WindSpeedPlot.html">WindSpeedPlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/wind-speed-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="leaf-wetness-and-light">Leaf wetness and light<a class="anchor" aria-label="anchor" href="#leaf-wetness-and-light"></a>
 </h3>
-<p>```{r leaf-wetness} LeafWetnessPlot(sample_weather) ```</p>
-<p>```{r solar-radiation} SolarRadPlot(sample_weather) ```</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/LeafWetnessPlot.html">LeafWetnessPlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/leaf-wetness-1.png" class="r-plt" alt="" width="100%"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/SolarRadPlot.html">SolarRadPlot</a></span><span class="op">(</span><span class="va">sample_weather</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/solar-radiation-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="monthly-grid-daily-rainfall">Monthly grid: daily rainfall<a class="anchor" aria-label="anchor" href="#monthly-grid-daily-rainfall"></a>
 </h3>
 <p>Each panel represents a calendar month, with day of month on the
 horizontal axis.</p>
-<p>```{r monthly-rainfall} PlotMonthlyGrid(sample_weather, variable =
-“Rainfall mm”) ```</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotMonthlyGrid.html">PlotMonthlyGrid</a></span><span class="op">(</span><span class="va">sample_weather</span>, variable <span class="op">=</span> <span class="st">"Rainfall mm"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/monthly-rainfall-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="monthly-grid-temperature-range">Monthly grid: temperature range<a class="anchor" aria-label="anchor" href="#monthly-grid-temperature-range"></a>
 </h3>
 <p>The shaded ribbon spans the daily minimum and maximum
 temperatures.</p>
-<p>```{r monthly-temperature-range} PlotMonthlyGrid(sample_weather,
-variable = “temperature_range”) ```</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotMonthlyGrid.html">PlotMonthlyGrid</a></span><span class="op">(</span><span class="va">sample_weather</span>, variable <span class="op">=</span> <span class="st">"temperature_range"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visualisations_files/figure-html/monthly-temperature-range-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="exporting-plots">Exporting plots<a class="anchor" aria-label="anchor" href="#exporting-plots"></a>
@@ -158,10 +151,14 @@ variable = “temperature_range”) ```</p>
 <p>Use `SaveWeatherPlots()` to write selected plots and monthly grids to
 a directory. The function invisibly returns the paths of the files
 created.</p>
-<p>```{r export-example, eval = FALSE} files &lt;- SaveWeatherPlots(
-sample_weather, plots = c(“temperature”, “rainfall”,
-“relative_humidity”), monthly_grids = TRUE, path = “weather-plots” )
-files ```</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SaveWeatherPlots.html">SaveWeatherPlots</a></span><span class="op">(</span></span>
+<span>  <span class="va">sample_weather</span>,</span>
+<span>  plots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"temperature"</span>, <span class="st">"rainfall"</span>, <span class="st">"relative_humidity"</span><span class="op">)</span>,</span>
+<span>  monthly_grids <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"weather-plots"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">files</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

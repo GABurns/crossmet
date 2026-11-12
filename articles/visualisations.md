@@ -1,32 +1,5 @@
 # Weather graph gallery
 
-\`\`\`{r, include = FALSE} knitr::opts_chunk\$set( collapse = TRUE,
-comment = “#\>”, fig.width = 8, fig.height = 4.8, out.width = “100%” )
-library(crossmet) library(dplyr) library(lubridate)
-
-## Reproducible illustrative observations; these are not station measurements.
-
-set.seed(42) dates \<- seq.Date(as.Date(“2024-01-01”),
-as.Date(“2024-12-31”), by = “day”) variables \<- c( “Temperature deg C
-Min”, “Temperature deg C Max”, “Air temp Mean”, “Temp diff deg C”,
-“Rainfall mm”, “Soil 15cm deg C”, “Soil 45cm deg C”, “Average Wind speed
-Km/h”, “RH (%)”, “Leaf wetness (U)”, “Lite totals daily (W/m2)” )
-sample_weather \<- expand.grid(Date = dates, variable = variables)
-sample_weather \<- sample_weather \|\> mutate( DOY = yday(Date),
-seasonal = 10 + 7 \* sin(2 \* pi \* (DOY - 100) / 365), value =
-case_when( variable == “Temperature deg C Min” ~ seasonal - runif(n(),
-1, 5), variable == “Temperature deg C Max” ~ seasonal + runif(n(), 2,
-7), variable == “Air temp Mean” ~ seasonal + rnorm(n(), 0, 1), variable
-== “Temp diff deg C” ~ runif(n(), 2, 8), variable == “Rainfall mm” ~
-rgamma(n(), shape = 1.2, scale = 2), variable == “Soil 15cm deg C” ~
-seasonal - 1 + rnorm(n(), 0, 1), variable == “Soil 45cm deg C” ~
-seasonal - 2 + rnorm(n(), 0, 0.7), variable == “Average Wind speed Km/h”
-~ rgamma(n(), 3, 2), variable == “RH (%)” ~ pmin(100, pmax(20,
-rnorm(n(), 78, 12))), variable == “Leaf wetness (U)” ~ runif(n(), 0, 1),
-variable == “Lite totals daily (W/m2)” ~ pmax(0, 100 + 90 \* sin(2 \* pi
-\* (DOY - 80) / 365) + rnorm(n(), 0, 20)), TRUE ~ NA_real\_ ) ) \|\>
-select(Date, DOY, variable, value) \`\`\`
-
 ## About this gallery
 
 The plots below demonstrate the package’s plotting functions using a
@@ -39,48 +12,91 @@ data.
 Daily minimum and maximum temperature are shown together to highlight
 the diurnal range and seasonal cycle.
 
-\`\`\`{r air-temperature} TemperaturePlot(sample_weather) \`\`\`
+``` r
+
+TemperaturePlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/air-temperature-1.png)
 
 ### Rainfall
 
 Daily rainfall is shown as a time series of daily totals.
 
-\`\`\`{r rainfall} RainfallPlot(sample_weather) \`\`\`
+``` r
+
+RainfallPlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/rainfall-1.png)
 
 ### Relative humidity
 
-\`\`\`{r relative-humidity} RelativeHumidityPlot(sample_weather) \`\`\`
+``` r
+
+RelativeHumidityPlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/relative-humidity-1.png)
 
 ### Soil temperature
 
 The soil temperature plot compares the 15 cm and 45 cm measurements.
 
-\`\`\`{r soil-temperature} SoilTempPlot(sample_weather) \`\`\`
+``` r
+
+SoilTempPlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/soil-temperature-1.png)
 
 ### Wind speed
 
-\`\`\`{r wind-speed} WindSpeedPlot(sample_weather) \`\`\`
+``` r
+
+WindSpeedPlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/wind-speed-1.png)
 
 ### Leaf wetness and light
 
-\`\`\`{r leaf-wetness} LeafWetnessPlot(sample_weather) \`\`\`
+``` r
 
-\`\`\`{r solar-radiation} SolarRadPlot(sample_weather) \`\`\`
+LeafWetnessPlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/leaf-wetness-1.png)
+
+``` r
+
+SolarRadPlot(sample_weather)
+```
+
+![](visualisations_files/figure-html/solar-radiation-1.png)
 
 ### Monthly grid: daily rainfall
 
 Each panel represents a calendar month, with day of month on the
 horizontal axis.
 
-\`\`\`{r monthly-rainfall} PlotMonthlyGrid(sample_weather, variable =
-“Rainfall mm”) \`\`\`
+``` r
+
+PlotMonthlyGrid(sample_weather, variable = "Rainfall mm")
+```
+
+![](visualisations_files/figure-html/monthly-rainfall-1.png)
 
 ### Monthly grid: temperature range
 
 The shaded ribbon spans the daily minimum and maximum temperatures.
 
-\`\`\`{r monthly-temperature-range} PlotMonthlyGrid(sample_weather,
-variable = “temperature_range”) \`\`\`
+``` r
+
+PlotMonthlyGrid(sample_weather, variable = "temperature_range")
+```
+
+![](visualisations_files/figure-html/monthly-temperature-range-1.png)
 
 ### Exporting plots
 
@@ -88,7 +104,13 @@ Use \`SaveWeatherPlots()\` to write selected plots and monthly grids to
 a directory. The function invisibly returns the paths of the files
 created.
 
-\`\`\`{r export-example, eval = FALSE} files \<- SaveWeatherPlots(
-sample_weather, plots = c(“temperature”, “rainfall”,
-“relative_humidity”), monthly_grids = TRUE, path = “weather-plots” )
-files \`\`\`
+``` r
+
+files <- SaveWeatherPlots(
+  sample_weather,
+  plots = c("temperature", "rainfall", "relative_humidity"),
+  monthly_grids = TRUE,
+  path = "weather-plots"
+)
+files
+```

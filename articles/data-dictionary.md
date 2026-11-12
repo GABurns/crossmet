@@ -1,8 +1,5 @@
 # Data dictionary
 
-\`\`\`{r, include = FALSE} knitr::opts_chunk\$set(collapse = TRUE,
-comment = “#\>”) \`\`\`
-
 ## Imported data structure
 
 \`ImportWeather()\` returns a long-format data frame with four columns.
@@ -56,11 +53,16 @@ summaries.
 
 ## Example
 
-\`\`\`{r, eval = FALSE} weather \<- ImportWeather( file =
-“crossnacreevy.xlsx”, start_date = “2020-01-01”, end_date = “2024-12-31”
+``` r
+
+weather <- ImportWeather(
+  file = "crossnacreevy.xlsx",
+  start_date = "2020-01-01",
+  end_date = "2024-12-31"
 )
 
-dplyr::filter(weather, variable == “Rainfall mm”) \`\`\`
+dplyr::filter(weather, variable == "Rainfall mm")
+```
 
 ## Source and interpretation
 

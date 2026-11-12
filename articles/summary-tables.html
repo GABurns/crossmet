@@ -5,6 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Monthly summaries and climate normals • crossmet</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -65,8 +70,6 @@
 
     
     
-<p>```{r, include = FALSE} knitr::opts_chunk$set(collapse = TRUE,
-comment = “#&gt;”) ```</p>
 <div class="section level2">
 <h2 id="two-different-questions">Two different questions<a class="anchor" aria-label="anchor" href="#two-different-questions"></a>
 </h2>
@@ -84,11 +87,15 @@ climatology across years</strong>?</li>
 <div class="section level2">
 <h2 id="monthly-summaries-by-year">Monthly summaries by year<a class="anchor" aria-label="anchor" href="#monthly-summaries-by-year"></a>
 </h2>
-<p>```{r, eval = FALSE} weather &lt;- ImportWeather(
-“data/crossnacreevy.xlsx”, start_date = “2018-01-01”, end_date =
-“2024-12-31” )</p>
-<p>monthly_by_year &lt;- MonthlySummaryTable(weather) monthly_by_year
-```</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportWeather.html">ImportWeather</a></span><span class="op">(</span></span>
+<span>  <span class="st">"data/crossnacreevy.xlsx"</span>,</span>
+<span>  start_date <span class="op">=</span> <span class="st">"2018-01-01"</span>,</span>
+<span>  end_date <span class="op">=</span> <span class="st">"2024-12-31"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">monthly_by_year</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MonthlySummaryTable.html">MonthlySummaryTable</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span>
+<span><span class="va">monthly_by_year</span></span></code></pre></div>
 <p>The result contains one row per year and weather variable, with
 calendar months as columns. January 2020 and January 2021 remain
 separate rows.</p>
@@ -96,8 +103,9 @@ separate rows.</p>
 <div class="section level2">
 <h2 id="long-term-monthly-climate-summaries">Long-term monthly climate summaries<a class="anchor" aria-label="anchor" href="#long-term-monthly-climate-summaries"></a>
 </h2>
-<p>```{r, eval = FALSE} climate_normals &lt;-
-ClimateSummaryTable(weather) climate_normals ```</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">climate_normals</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ClimateSummaryTable.html">ClimateSummaryTable</a></span><span class="op">(</span><span class="va">weather</span><span class="op">)</span></span>
+<span><span class="va">climate_normals</span></span></code></pre></div>
 <p>The climatology function first calculates each year’s monthly
 statistic, then takes the mean of those yearly values for each calendar
 month and variable. For rainfall, for example, it averages annual
