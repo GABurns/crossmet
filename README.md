@@ -20,10 +20,10 @@ summaries and long-term monthly climate summaries, and creates weather plots.
 
 Install the development version from GitHub:
 
-\`\`\`r
+```r
 install.packages("pak")
 pak::pak("GABurns/crossmet")
-\`\`\`
+```
 
 ## Import weather observations
 
@@ -31,7 +31,7 @@ pak::pak("GABurns/crossmet")
 Worksheets are expected to be named with their four-digit year (for example,
 \`2023\`) and to follow the Crossnacreevy workbook layout.
 
-\`\`\`r
+```r
 library(crossmet)
 
 weather <- ImportWeather(
@@ -41,7 +41,7 @@ weather <- ImportWeather(
 )
 
 head(weather)
-\`\`\`
+```
 
 The returned data frame contains \`Date\`, \`DOY\`, \`variable\` and \`value\`
 columns, with one row per date and weather variable.
@@ -53,9 +53,9 @@ Rainfall and daily solar-radiation totals are summed; daily maximum temperature
 is represented by its monthly maximum; daily minimum temperature by its
 monthly minimum; and other variables by their monthly mean.
 
-\`\`\`r
+```r
 yearly_months <- MonthlySummaryTable(weather)
-\`\`\`
+```
 
 \`ClimateSummaryTable()\` calculates long-term monthly climatological values.
 It first calculates the relevant monthly statistic for each year, then averages
@@ -63,9 +63,9 @@ those yearly monthly values across the available years. This means rainfall
 climatology is the mean of annual monthly rainfall totals, rather than the
 average daily rainfall.
 
-\`\`\`r
+```r
 climate_normals <- ClimateSummaryTable(weather)
-\`\`\`
+```
 
 Missing observations are excluded from calculations. A yearly monthly
 statistic is \`NA\` when that group has no observed values; a climatological
@@ -76,15 +76,15 @@ average is \`NA\` when all years are missing for that month and variable.
 The plotting functions return ggplot objects and can be customised with normal
 ggplot2 layers.
 
-\`\`\`r
+```r
 PlotMonthlyGrid(weather, variable = "RH (%)")
 RainfallPlot(weather)
 TemperaturePlot(weather)
-\`\`\`
+```
 
 To save a selection of plots and the monthly grid plots:
 
-\`\`\`r
+```r
 saved_files <- SaveWeatherPlots(
   weather,
   plots = c("temperature", "rainfall", "relative_humidity"),
@@ -93,7 +93,7 @@ saved_files <- SaveWeatherPlots(
 )
 
 saved_files
-\`\`\`
+```
 
 The function returns the paths of all files it creates, including monthly grid
 images.
@@ -109,21 +109,14 @@ images.
 
 See the function help pages for complete argument details:
 
-\`\`\`r
+```r
 ?ImportWeather
 ?MonthlySummaryTable
 ?ClimateSummaryTable
 ?PlotMonthlyGrid
 ?SaveWeatherPlots
-\`\`\`
+```
 
-## Development
 
-Run the package tests with:
-
-\`\`\`r
- pak::pak("GABurns/crossmet")
- testthat::test_local()
-\`\`\`
 
 The package uses testthat edition 3.
