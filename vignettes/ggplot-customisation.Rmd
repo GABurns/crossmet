@@ -1,0 +1,135 @@
+---
+title: "Customising crossmet plots with ggplot2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\\VignetteIndexEntry{Customising crossmet plots with ggplot2}
+  %\\VignetteEngine{knitr::rmarkdown}
+  %\\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 4.8,
+  out.width = "100%"
+)
+
+library(crossmet)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+
+# Reproducible illustrative observations; these are not station measurements.
+set.seed(42)
+dates <- seq.Date(as.Date("2024-01-01"), as.Date("2024-12-31"), by = "day")
+variables <- c(
+  "Temperature deg C Min", "Temperature deg C Max", "Air temp Mean",
+  "Temp diff deg C", "Rainfall mm", "Soil 15cm deg C", "Soil 45cm deg C",
+  "Average Wind speed Km/h", "RH (%)", "Leaf wetness (U)",
+  "Lite totals daily (W/m2)"
+)
+sample_weather <- expand.grid(Date = dates, variable = variables) |>
+  mutate(
+    DOY = yday(Date),
+    seasonal = 10 + 7 * sin(2 * pi * (DOY - 100) / 365),
+    value = case_when(
+      variable == "Temperature deg C Min" ~ seasonal - runif(n(), 1, 5),
+      variable == "Temperature deg C Max" ~ seasonal + runif(n(), 2, 7),
+      variable == "Air temp Mean" ~ seasonal + rnorm(n(), 0, 1),
+      variable == "Temp diff deg C" ~ runif(n(), 2, 8),
+      variable == "Rainfall mm" ~ rgamma(n(), shape = 1.2, scale = 2),
+      variable == "Soil 15cm deg C" ~ seasonal - 1 + rnorm(n(), 0, 1),
+      variable == "Soil 45cm deg C" ~ seasonal - 2 + rnorm(n(), 0, 0.7),
+      variable == "Average Wind speed Km/h" ~ rgamma(n(), 3, 2),
+      variable == "RH (%)" ~ pmin(100, pmax(20, rnorm(n(), 78, 12))),
+      variable == "Leaf wetness (U)" ~ runif(n(), 0, 1),
+      variable == "Lite totals daily (W/m2)" ~ pmax(
+        0, 100 + 90 * sin(2 * pi * (DOY - 80) / 365) + rnorm(n(), 0, 20)
+      ),
+      TRUE ~ NA_real_
+    )
+  ) |>
+  select(Date, DOY, variable, value)
+```
+
+# Plotting functions return ggplot objects
+
+The plotting functions in **crossmet** return ordinary
+`ggplot2::ggplot()` objects. This means you can save them in variables,
+inspect them, and extend them with the same layers and scales you use in any
+other ggplot2 workflow.
+
+For example, create a mean air temperature plot and check its class:
+
+```{r base-plot}
+temperature_plot <- MeanAirTempPlot(sample_weather)
+
+inherits(temperature_plot, "ggplot")
+```
+
+The result is `TRUE`: the returned object is a ggplot object, not a static
+image. You can therefore add layers with the `+` operator.
+
+# Add a geom and annotate an event
+
+The following example adds a smoothed trend line to the daily observations.
+It then marks an illustrative event date with a vertical line and a text
+annotation. Replace the example date and label with an event relevant to your
+own analysis (for example, a storm, frost, equipment change or management
+intervention).
+
+```{r customise-plot}
+event_date <- as.Date("2024-08-15")
+
+temperature_plot +
+  geom_smooth(
+    method = "loess",
+    formula = y ~ x,
+    se = FALSE,
+    colour = "#D55E00",
+    linewidth = 0.9
+  ) +
+  geom_vline(
+    xintercept = as.numeric(event_date),
+    linetype = "dashed",
+    colour = "#0072B2"
+  ) +
+  annotate(
+    "text",
+    x = event_date,
+    y = Inf,
+    label = "Illustrative event",
+    vjust = 1.5,
+    hjust = -0.05,
+    colour = "#0072B2"
+  )
+```
+
+Here, `geom_smooth()` inherits the data and aesthetic mappings from the
+original crossmet plot. The event marker is added as another ggplot2 layer;
+`annotate()` places a label at the same date. No changes to the package
+plotting function are needed.
+
+# Extend other crossmet plots
+
+The same approach works with the other plotting functions. For example, add a
+point layer to a rainfall plot, or change its labels and theme:
+
+```{r other-plot, eval = FALSE}
+rainfall_plot <- RainfallPlot(sample_weather)
+
+rainfall_plot +
+  labs(
+    title = "Daily rainfall at Crossnacreevy",
+    subtitle = "Add your own explanatory subtitle",
+    caption = "Source: Crossnacreevy weather observations"
+  ) +
+  theme_minimal()
+```
+
+You can use any compatible ggplot2 layer, scale, coordinate system or theme.
+For details, see the [ggplot2 documentation](https://ggplot2.tidyverse.org/).
+The examples in this vignette use synthetic data only and do not represent
+actual station measurements.
