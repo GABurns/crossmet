@@ -2,7 +2,7 @@
 % Please edit documentation in R/RainfallPlot.R
 \name{RainfallPlot}
 \alias{RainfallPlot}
-\title{title Plot daily rainfall}
+\title{Plot daily rainfall}
 \usage{
 RainfallPlot(
   data,
@@ -10,6 +10,11 @@ RainfallPlot(
     "\%d \%b \%Y"), format(max(data$Date), "\%d \%b \%Y")),
   caption = "Location: Crossnacreevy, Northern Ireland"
 )
+}
+\arguments{
+\item{data}{A long-format weather data frame with Date, DOY, variable, and value columns.}
+\item{title}{Plot title. Defaults to a title containing the date range.}
+\item{caption}{Plot caption.}
 }
 \value{
 A ggplot2 object.
