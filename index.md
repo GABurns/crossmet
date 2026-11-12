@@ -43,7 +43,7 @@ weather observations.
 
 ## Start here
 
-\`\`\`r
+```r
 install.packages("pak")
 pak::pak("GABurns/crossmet")
 
@@ -59,7 +59,7 @@ monthly <- MonthlySummaryTable(weather)
 climate <- ClimateSummaryTable(weather)
 
 RainfallPlot(weather)
-\`\`\`
+```
 
 The workbook is expected to contain one worksheet per year, named with its
 four-digit year, and the Crossnacreevy weather-station column layout.
