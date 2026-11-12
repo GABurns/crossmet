@@ -13,3 +13,5 @@
   normals](https://gaburns.github.io/crossmet/articles/summary-tables.md):
 - [Weather graph
   gallery](https://gaburns.github.io/crossmet/articles/visualisations.md):
+- [Customising crossmet plots with
+  ggplot2](https://gaburns.github.io/crossmet/articles/ggplot-customisation.md):
