@@ -52,7 +52,7 @@ PlotMonthlyGrid <- function(data,
 
     plot_data <- data |>
       dplyr::filter(.data$variable %in% temperature_variables) |>
-      tidyr::pivot_wider(names_from = .data$variable, values_from = .data$value)
+      tidyr::pivot_wider(names_from = "variable", values_from = "value")
 
     p <- ggplot(plot_data, aes(x = day(.data$Date)))
   } else {

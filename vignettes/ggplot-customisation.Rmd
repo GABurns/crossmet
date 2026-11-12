@@ -2,9 +2,9 @@
 title: "Customising crossmet plots with ggplot2"
 output: rmarkdown::html_vignette
 vignette: >
-  %\\VignetteIndexEntry{Customising crossmet plots with ggplot2}
-  %\\VignetteEngine{knitr::rmarkdown}
-  %\\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Customising crossmet plots with ggplot2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

@@ -14,37 +14,17 @@
 #' @param file Character string. Path to the Excel workbook containing the
 #'   weather data.
 #' @param start_date Start date of the period to import. Either a `Date`
-#'   object or a character string that can be converted to a date using
-#'   `as.Date()`, e.g. `"2023-01-01"`.
+#'   object or an unambiguous date string such as `"2023-01-01"`.
 #' @param end_date End date of the period to import. Either a `Date`
-#'   object or a character string that can be converted to a date using
-#'   `as.Date()`, e.g. `"2025-12-31"`.
+#'   object or an unambiguous date string such as `"2025-12-31"`.
 #'
-#' @return A tibble in long format with four columns:
-#' \describe{
-#'   \item{date}{Observation date.}
-#'   \item{DOY}{Day of year.}
-#'   \item{variable}{Weather variable measured.}
-#'   \item{value}{Observed value.}
-#' }
-#'
-#' @details
-#' Only worksheets corresponding to years between `start_date` and
-#' `end_date` are read. For example, a request from `"2023-06-01"` to
-#' `"2025-04-30"` will attempt to read the 2023, 2024 and 2025 worksheets.
-#'
-#' After the worksheets have been combined, observations outside the
-#' requested date range are removed.
-#'
+#' @return A tibble in long format with four columns: date, DOY, variable,
+#'   and value.
+#' @details Only worksheets corresponding to years between `start_date` and
+#' `end_date` are read. Observations outside the requested date range are removed.
 #' @examples
 #' \dontrun{
-#' weather <- import_weather(
-#'   file = "weather.xlsx",
-#'   start_date = "2022-01-01",
-#'   end_date = "2025-12-31"
-#' )
-#'
-#' weather
+#' weather <- ImportWeather("weather.xlsx", "2022-01-01", "2025-12-31")
 #' }
 #' @importFrom readxl excel_sheets read_excel cell_limits
 #' @importFrom dplyr filter bind_rows mutate arrange
@@ -53,31 +33,37 @@
 ImportWeather <- function(file,
                           start_date = "2013-01-01",
                           end_date = Sys.Date()) {
-
-  # Check file exists
   if (!file.exists(file)) {
     stop("Excel file does not exist: ", file, call. = FALSE)
   }
 
-  # Convert dates
-  start_date <- as.Date(start_date)
-  end_date   <- as.Date(end_date)
-
-  if (is.na(start_date) || is.na(end_date)) {
-    stop("`start_date` and `end_date` must be valid dates.", call. = FALSE)
+  parse_date <- function(x, argument) {
+    if (length(x) != 1L || is.na(x)) {
+      stop("`", argument, "` must be a single valid date.", call. = FALSE)
+    }
+    parsed <- tryCatch(
+      suppressWarnings(as.Date(x)),
+      error = function(e) as.Date(NA)
+    )
+    if (length(parsed) != 1L || is.na(parsed)) {
+      stop("`", argument, "` must be a valid date.", call. = FALSE)
+    }
+    parsed
   }
+
+  start_date <- parse_date(start_date, "start_date")
+  end_date <- parse_date(end_date, "end_date")
 
   if (start_date > end_date) {
     stop("`start_date` must be earlier than or equal to `end_date`.",
          call. = FALSE)
   }
 
-  # Determine years required
-  years <- seq(as.integer(format(start_date, "%Y")), as.integer(format(end_date, "%Y")))
+  years <- as.character(seq(
+    as.integer(format(start_date, "%Y")),
+    as.integer(format(end_date, "%Y"))
+  ))
 
-  years <- as.character(years)
-
-  # Read workbook metadata and report malformed workbooks clearly
   sheets <- tryCatch(
     excel_sheets(file),
     error = function(e) {
@@ -90,120 +76,74 @@ ImportWeather <- function(file,
     stop("Excel workbook contains no worksheets.", call. = FALSE)
   }
 
-  # Select sheets corresponding to requested years
   selected_sheets <- sheets[sheets %in% years]
-
-  # Ensure the required years are present
   missing_years <- setdiff(years, selected_sheets)
-
-  if (length(missing_years) > 0) {
+  if (length(missing_years)) {
     warning("No worksheet found for year(s): ",
-            paste(missing_years, collapse = ", "),
-            call. = FALSE)
+            paste(missing_years, collapse = ", "), call. = FALSE)
   }
-
   if (!length(selected_sheets)) {
-    stop(
-      "No worksheets found for the requested year(s): ",
-      paste(years, collapse = ", "),
-      call. = FALSE
-    )
+    stop("No worksheets found for the requested year(s): ",
+         paste(years, collapse = ", "), call. = FALSE)
   }
 
-  # Expected Excel columns
   expected_cols <- c(
-    "Date",
-    "DOY",
-    "Temperature deg C Min",
-    "Temperature deg C Max",
-    "Air temp Mean",
-    "Temp diff deg C",
-    "Rainfall mm",
-    "Soil 15cm deg C",
-    "Soil 45cm deg C",
-    "Average Wind speed Km/h",
-    "RH (%)",
-    "Leaf wetness (U)",
-    "Lite totals daily (W/m2)"
+    "Date", "DOY", "Temperature deg C Min", "Temperature deg C Max",
+    "Air temp Mean", "Temp diff deg C", "Rainfall mm", "Soil 15cm deg C",
+    "Soil 45cm deg C", "Average Wind speed Km/h", "RH (%)",
+    "Leaf wetness (U)", "Lite totals daily (W/m2)"
   )
 
-  # Read each year
   weather <- lapply(selected_sheets, function(sheet) {
-    # Column names are split across first 2 rows
-    headers <- read_excel(file,
-                          sheet = sheet,
-                          col_names = FALSE,
-                          n_max = 2)
-
+    headers <- read_excel(file, sheet = sheet, col_names = FALSE, n_max = 2)
     if (nrow(headers) < 2L || ncol(headers) < 13L) {
-      stop(
-        "Worksheet '", sheet,
-        "' must contain two header rows and at least 13 columns.",
-        call. = FALSE
-      )
+      stop("Worksheet '", sheet,
+           "' must contain two header rows and at least 13 columns.",
+           call. = FALSE)
     }
-
     headers[is.na(headers)] <- ""
-
-    column_names <- paste(headers[1, ], headers[2, ])
-
-    column_names <- gsub("\\s+", " ", column_names)
-    column_names <- trimws(column_names)
-
+    column_names <- trimws(gsub("\\s+", " ", paste(headers[1, ], headers[2, ])))
     column_names[column_names == "Max"] <- "Temperature deg C Max"
 
     dat <- read_excel(
       path = file,
       sheet = sheet,
-      range = cell_limits(
-        ul = c(3, 1),
-        # Row 3, column A
-        lr = c(NA, 13) # Last row, column M
-      ),
-      col_types = c("date", rep("numeric", 12)),
+      range = cell_limits(ul = c(3, 1), lr = c(NA, 13)),
+      col_types = c("date", rep("text", 12)),
       col_names = column_names,
       .name_repair = "minimal"
     )
-
-    # Remove spaces around column names
     names(dat) <- trimws(names(dat))
+    # Ignore trailing workbook notes/summary rows, which have no observation date.
+    dat <- dat[!is.na(dat$Date), , drop = FALSE]
 
-    # Check required columns before selecting them. A warning followed by
-    # dat[expected_cols] would otherwise fail with an unhelpful subscript error.
     missing_cols <- setdiff(expected_cols, names(dat))
-
-    if (length(missing_cols) > 0) {
-      stop(
-        "Worksheet '", sheet, "' is missing required column(s): ",
-        paste(missing_cols, collapse = ", "),
-        call. = FALSE
-      )
+    if (length(missing_cols)) {
+      stop("Worksheet '", sheet, "' is missing required column(s): ",
+           paste(missing_cols, collapse = ", "), call. = FALSE)
     }
-
     if (anyDuplicated(names(dat))) {
       stop("Worksheet '", sheet, "' contains duplicated column names.",
            call. = FALSE)
     }
 
-    dat[expected_cols]
+    dat <- dat[expected_cols]
+    numeric_cols <- setdiff(expected_cols, "Date")
+    dat[numeric_cols] <- lapply(dat[numeric_cols], function(x) {
+      suppressWarnings(as.numeric(x))
+    })
+    dat
   })
 
-  # Combine years
-  weather <- bind_rows(weather)
-
-  # Filter date range
-  weather <- weather |>
+  weather <- bind_rows(weather) |>
     mutate(Date = as.Date(.data$Date)) |>
     filter(.data$Date >= start_date, .data$Date <= end_date)
 
-  # Convert weather variables to long format
-  weather <- pivot_longer(
-    weather,
-    cols = -c("Date", "DOY"),
-    names_to = "variable",
-    values_to = "value"
-  ) |>
+  weather |>
+    pivot_longer(
+      cols = -c("Date", "DOY"),
+      names_to = "variable",
+      values_to = "value"
+    ) |>
     arrange(.data$variable, .data$Date)
-
-  return(weather)
 }
