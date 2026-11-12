@@ -10,7 +10,7 @@ Authors@R: c(
     )
   )
 Description: Processes daily meteorological summaries from the AFBI Crossnacreevy weather station into monthly summary tables and data visualisations. Provides tools for exploring weather patterns, seasonal variation and historical meteorological trends.
-License: What license is it under?
+License: file LICENSE
 Encoding: UTF-8
 Config/roxygen2/version: 8.1.1
 Imports:
