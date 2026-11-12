@@ -35,6 +35,9 @@ jobs:
           extra-packages: any::pkgdown
           needs: website
 
+      - name: Install crossmet
+        run: R CMD INSTALL .
+
       - name: Build pkgdown site
         run: Rscript -e 'pkgdown::build_site_github_pages(dest_dir = "docs")'
 
