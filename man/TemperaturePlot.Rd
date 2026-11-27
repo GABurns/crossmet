@@ -15,6 +15,11 @@ TemperaturePlot(
 \item{data}{A data frame containing weather data in long format.
 The data must contain the columns `Date`, `DOY`, `variable`, and `value`.}
 }
+\arguments{
+\item{data}{A long-format weather data frame with Date, DOY, variable, and value columns.}
+\item{title}{Plot title. Defaults to a title containing the date range.}
+\item{caption}{Plot caption.}
+}
 \value{
 A ggplot2 object.
 }

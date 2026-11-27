@@ -1,28 +1,28 @@
 #' @title Plot minimum and maximum air temperature
 #' @author Gareth Burns
 #' @description Creates a time-series plot of daily minimum and maximum temperature.
-#' @param data A data frame containing weather data in long format.
-#'   The data must contain the columns `Date`, `DOY`, `variable`, and `value`.
+#' @param data A long-format weather data frame with Date, DOY, variable,
+#'   and value columns.
+#' @param title Plot title. Defaults to a title containing the date range.
+#' @param caption Plot caption.
 #' @return A ggplot2 object.
 #' @examples
-#' \dontrun{
+#' \\dontrun{
 #' TemperaturePlot(weather)
 #' }
-#'
 #' @export
-TemperaturePlot <- function(data, title = sprintf("Daily Air Temperature Range from %s to %s",
-                                                  format(min(data$Date), "%d %b %Y"),
-                                                  format(max(data$Date), "%d %b %Y")),
-                            caption = "Location: Crossnacreevy, Northern Ireland") {
-
-  variables <- c(
-    "Temperature deg C Min",
-    "Temperature deg C Max"
-  )
-
+TemperaturePlot <- function(
+    data,
+    title = sprintf(
+      "Daily Air Temperature Range from %s to %s",
+      format(min(data$Date), "%d %b %Y"),
+      format(max(data$Date), "%d %b %Y")
+    ),
+    caption = "Location: Crossnacreevy, Northern Ireland") {
+  variables <- c("Temperature deg C Min", "Temperature deg C Max")
   plot_data <- data |>
-    filter(.data$variable %in% variables) |>
-    mutate(
+    dplyr::filter(.data$variable %in% variables) |>
+    dplyr::mutate(
       Date = as.Date(.data$Date),
       variable = factor(
         .data$variable,
@@ -31,33 +31,18 @@ TemperaturePlot <- function(data, title = sprintf("Daily Air Temperature Range f
       )
     )
 
-  ggplot(
+  ggplot2::ggplot(
     plot_data,
-    aes(
-      x = .data$Date,
-      y = .data$value,
-      colour = .data$variable
-    )
+    ggplot2::aes(x = .data$Date, y = .data$value, colour = .data$variable)
   ) +
-    geom_line(
-      linewidth = 0.6,
-      na.rm = TRUE
+    ggplot2::geom_line(linewidth = 0.6, na.rm = TRUE) +
+    ggplot2::labs(
+      title = title, caption = caption, x = NULL,
+      y = "Temperature (\\u00b0C)", colour = "Temperature"
     ) +
-    labs(
-      title = title,
-      caption = caption,
-      x = NULL,
-      y = "Temperature (°C)",
-      colour = "Temperature"
+    ggplot2::scale_colour_manual(
+      values = c("Minimum" = "#2C7FB8", "Maximum" = "#D7301F")
     ) +
-    scale_colour_manual(
-      values = c(
-        "Minimum" = "#2C7FB8",
-        "Maximum" = "#D7301F"
-      )
-    ) +
-    scale_x_date(
-      date_labels = "%b %Y"
-    ) +
-    theme_minimal()
+    ggplot2::scale_x_date(date_labels = "%b %Y") +
+    ggplot2::theme_minimal()
 }

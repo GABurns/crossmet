@@ -12,6 +12,11 @@ SoilTempPlot(
   caption = "Location: Crossnacreevy, Northern Ireland"
 )
 }
+\arguments{
+\item{data}{A long-format weather data frame with Date, DOY, variable, and value columns.}
+\item{title}{Plot title. Defaults to a title containing the date range.}
+\item{caption}{Plot caption.}
+}
 \value{
 A ggplot object.
 }
