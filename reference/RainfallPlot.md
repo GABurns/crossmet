@@ -1,4 +1,4 @@
-# title Plot daily rainfall
+# Plot daily rainfall
 
 Creates a column plot showing daily rainfall totals.
 
@@ -12,6 +12,21 @@ RainfallPlot(
   caption = "Location: Crossnacreevy, Northern Ireland"
 )
 ```
+
+## Arguments
+
+- data:
+
+  A long-format weather data frame with Date, DOY, variable, and value
+  columns.
+
+- title:
+
+  Plot title. Defaults to a title containing the date range.
+
+- caption:
+
+  Plot caption.
 
 ## Value
 

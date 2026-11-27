@@ -15,6 +15,21 @@ SoilTempPlot(
 )
 ```
 
+## Arguments
+
+- data:
+
+  A long-format weather data frame with Date, DOY, variable, and value
+  columns.
+
+- title:
+
+  Plot title. Defaults to a title containing the date range.
+
+- caption:
+
+  Plot caption.
+
 ## Value
 
 A ggplot object.

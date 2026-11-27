@@ -20,6 +20,21 @@ TemperaturePlot(
   A data frame containing weather data in long format. The data must
   contain the columns \`Date\`, \`DOY\`, \`variable\`, and \`value\`.
 
+## Arguments
+
+- data:
+
+  A long-format weather data frame with Date, DOY, variable, and value
+  columns.
+
+- title:
+
+  Plot title. Defaults to a title containing the date range.
+
+- caption:
+
+  Plot caption.
+
 ## Value
 
 A ggplot2 object.

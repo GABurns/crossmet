@@ -108,7 +108,7 @@ Plot daily weather variables and monthly grids.
 - [`TemperatureDifferencePlot()`](https://gaburns.github.io/crossmet/reference/TemperatureDifferencePlot.md)
   : Plot temperature difference
 - [`RainfallPlot()`](https://gaburns.github.io/crossmet/reference/RainfallPlot.md)
-  : title Plot daily rainfall
+  : Plot daily rainfall
 - [`SoilTempPlot()`](https://gaburns.github.io/crossmet/reference/SoilTempPlot.md)
   : Plot soil temperature
 - [`WindSpeedPlot()`](https://gaburns.github.io/crossmet/reference/WindSpeedPlot.md)
